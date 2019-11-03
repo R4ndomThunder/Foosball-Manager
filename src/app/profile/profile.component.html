@@ -1,0 +1,20 @@
+
+<div class="row mb-5"></div>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-3">
+        <div *ngIf="auth.userData as user">
+            <img class="justify-content-center img-thumbnail rounded-circle" width="250px"
+                src="{{(user.photoURL) ? user.photoURL : 'https://www.studiumgbg.se/wp-content/uploads/2019/03/Skuggbild.png'}}"
+                alt="{{user.displayName}}">
+        </div>
+    </div>
+    <div class="col-6">
+        <div *ngIf="auth.userData as user">
+            <h1>Hi <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h1>
+            <p><strong>Email: {{user.email}}</strong></p>            
+        </div>
+    </div>
+    <div class="col-4"></div>
+
+</div>

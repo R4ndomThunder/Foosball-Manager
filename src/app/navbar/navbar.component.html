@@ -1,0 +1,29 @@
+<nav class="navbar sticky-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="">
+        <img src="../../assets/logo.png" width="30em" class="d-inline-block align-top" alt="">
+        Foosball Manager
+    </a>
+
+    <div *ngIf="auth.userData == null">
+        <a (click)="auth.SigninWithGoogle()">
+            <fa-icon [icon]="['fas','sign-in-alt']" style="color:white; font-size:2em;"></fa-icon>
+        </a>
+    </div>
+    <div *ngIf="auth.userData as user">
+        <img src="{{(user.photoURL)? user.photoURL : 'https://www.studiumgbg.se/wp-content/uploads/2019/03/Skuggbild.png'}}"
+            class="img-fluid rounded-circle" width="40em" mat-button [matMenuTriggerFor]="menu">
+        <mat-menu #menu="matMenu">
+            <a [routerLink]="['profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}"
+                mat-menu-item>
+                <fa-icon [icon]="['fas','user']"></fa-icon> Profile
+            </a>
+            <a [routerLink]="['tournamentmaker']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}"
+                mat-menu-item>
+                <fa-icon [icon]="['fas','plus']"></fa-icon> Create new tournament
+            </a>
+            <a (click)="auth.SignOut()" mat-menu-item>
+                <fa-icon [icon]="['fas','sign-out-alt']"></fa-icon> Logout
+            </a>
+        </mat-menu>
+    </div>
+</nav>

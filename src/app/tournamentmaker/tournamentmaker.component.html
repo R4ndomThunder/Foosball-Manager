@@ -1,0 +1,31 @@
+<div class="row mt-5">
+    <div class="col-lg-2 col-md-2 col-sm col-xs">
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <h2 class="text-center mb-5">- Create a new tournament -</h2>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
+        <form [formGroup]="tournamentForm" style="width:100%;">
+            <div class="form-row justify-content-center">
+                <div class="form-group col-6">
+                    <label for="inputAddress">*Tournament name:</label>
+                    <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
+                        placeholder="Foosball Champions" [(ngModel)]="name">
+                </div>
+            </div>
+            <div class="text-center mt-2 mb-5">
+                <button type="submit" class="btn btn-lg btn-outline-primary" [disabled]="tournamentForm.invalid"
+                    (click)="createTournament()">Create</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        </div>
+</div>

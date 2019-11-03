@@ -1,0 +1,29 @@
+<div class="v-flex-container justify-content-center">
+    <div class="flex-cell cell-3 cell-align-center">
+        <h2 class="text-center">- {{tournament.name}} -</h2>
+        <a class="btn btn-primary m-3" style="color:white;" (click)="createNewTeam(id)">
+            New team
+        </a>
+        <a class="btn btn-primary m-3" style="color:white;" [routerLink]="['/']">
+            New match
+        </a>
+    </div>
+
+    <div class="flex-cell cell-3 cell-align-center">
+        <h3 class="text-center">Teams</h3>
+        <div *ngFor="let t of tournament.teams; let i = index">
+            {{t.name}}
+        </div>
+    </div>
+
+    <div class="flex-cell cell-3 cell-align-center">
+        <h3 class="text-center">Matches</h3>
+        <div class="row" *ngFor="let m of tournament.matches; let i = index">
+            [{{m.teamBlue}}]
+            {{m.scoreBlue}} -
+            {{m.redScore}}
+            [{{m.teamRed}}]
+            ({{m.date | date: 'dd MMM yyyy'}})
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-4 text-center">
+        Tournament Name:
+    </div>
+    <div class="col-3 text-center">
+        Teams:
+    </div>
+    <div class="col-3"></div>
+    <div class="col-1"></div>
+</div>
+<div class="row p-3" *ngFor="let t of tournaments; let i = index">
+    <div class="col-1"></div>
+    <div class="col-4 text-center">
+        {{t.name}}
+    </div>
+    <div class="col-3 text-center">
+        {{t.teams?.length}}
+    </div>
+    <div class="col-3">
+        <a (click)="goToTournament(t.id)" class="btn btn-primary">
+            Show
+        </a>
+    </div>
+    <div class="col-1"></div>
+
+</div>

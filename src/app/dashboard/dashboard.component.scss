@@ -1,0 +1,12 @@
+.row:nth-child(even)
+{
+    background: lightblue;
+}
+.row:nth-child(odd)
+{
+    background: lightcyan;
+}
+
+.btn{
+    color:white;
+}
