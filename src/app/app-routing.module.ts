@@ -9,6 +9,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TeammakerComponent } from './teammaker/teammaker.component';
 import { TournamentmakerComponent } from './tournamentmaker/tournamentmaker.component';
 import { TournamentdetailComponent } from './tournamentdetail/tournamentdetail.component';
+import { MatchmakerComponent } from './matchmaker/matchmaker.component';
+import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
 
 
 export const routes: Routes = [
@@ -19,7 +21,12 @@ export const routes: Routes = [
   { path: 'teammaker', component: TeammakerComponent,canActivate: [SecureInnerPagesGuard] },
   { path: 'tournamentmaker', component: TournamentmakerComponent,canActivate: [SecureInnerPagesGuard] },
   { path: 'leaderboard', component: LeaderboardComponent, canActivate:[SecureInnerPagesGuard]},
-  { path: 'tournament', component: TournamentdetailComponent, canActivate: [SecureInnerPagesGuard]}
+  { path: 'tournament', component: TournamentdetailComponent, canActivate: [SecureInnerPagesGuard]},
+  { path: 'matchmaker', component: MatchmakerComponent, canActivate: [SecureInnerPagesGuard]},
+  { path: 'matchmanager', component: MatchmanagerComponent, canActivate: [SecureInnerPagesGuard]},
+  { path: '404', component: HomeComponent},
+  { path: '**', redirectTo: '/404'}
+
 ];
 
 @NgModule({

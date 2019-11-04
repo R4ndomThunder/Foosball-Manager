@@ -1,29 +1,61 @@
-<div class="v-flex-container justify-content-center">
+<div class="v-flex-container container-align-center">
     <div class="flex-cell cell-3 cell-align-center">
         <h2 class="text-center">- {{tournament.name}} -</h2>
-        <a class="btn btn-primary m-3" style="color:white;" (click)="createNewTeam(id)">
-            New team
-        </a>
-        <a class="btn btn-primary m-3" style="color:white;" [routerLink]="['/']">
-            New match
-        </a>
+        <div class="flex-cell cell-3 cell-align-center justify-content-center">
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="createNewTeam(id)">
+                New team
+            </a>
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="createNewMatch(id)">
+                New match
+            </a>
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="Unsubscibe()">
+                Unsubscibe
+            </a>
+            <form [formGroup]="roleForm">
+                <select *ngIf="isSigned === false" formControlName="PlayerRole" [(ngModel)]="playerRole">
+                    <option>Striker</option>
+                    <option>Defender</option>
+                </select>
+                <a *ngIf="isSigned === false" class="btn btn-dark m-3" style="color:white;" (click)="subscribe()">
+                    Subscribe
+                </a>
+            </form>
+        </div>
     </div>
+</div>
+<div class="h-flex-container container-align-center">
 
     <div class="flex-cell cell-3 cell-align-center">
         <h3 class="text-center">Teams</h3>
-        <div *ngFor="let t of tournament.teams; let i = index">
-            {{t.name}}
+        <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
+            Name - Score - Win - Lost - Played - GF - GS
+        </div>
+        <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
+            {{t.name}} - {{t.score}} - {{t.win}} - {{t.lost}} - {{t.played}} - {{t.goalFatti}} - {{t.goalSubiti}}
         </div>
     </div>
 
-    <div class="flex-cell cell-3 cell-align-center">
+    <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
         <h3 class="text-center">Matches</h3>
-        <div class="row" *ngFor="let m of tournament.matches; let i = index">
-            [{{m.teamBlue}}]
-            {{m.scoreBlue}} -
+        <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-center"
+            *ngFor="let m of tournament.matches; let i = index">
+            [{{m.blueTeam.name}}]
+            {{m.blueScore}} -
             {{m.redScore}}
-            [{{m.teamRed}}]
+            [{{m.redTeam.name}}]
             ({{m.date | date: 'dd MMM yyyy'}})
+
+            <a class="btn btn-dark" *ngIf="m.finished == false" (click)="showMatch(m.id)">
+                Show
+            </a>
+
+        </div>
+    </div>
+
+    <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
+        <h3 class="text-center">Players</h3>
+        <div class="row justify-content-center" *ngFor="let p of tournament.users; let i = index">
+            {{p.name}}
         </div>
     </div>
 </div>

@@ -29,6 +29,7 @@ import { TeammakerComponent } from './teammaker/teammaker.component';
 import { TournamentmakerComponent } from './tournamentmaker/tournamentmaker.component';
 import { TournamentdetailComponent } from './tournamentdetail/tournamentdetail.component';
 import { MatchmakerComponent } from './matchmaker/matchmaker.component';
+import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatchmakerComponent } from './matchmaker/matchmaker.component';
     TeammakerComponent,
     TournamentmakerComponent,
     TournamentdetailComponent,
-    MatchmakerComponent
+    MatchmakerComponent,
+    MatchmanagerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,11 @@
+import { Team } from './team';
+
 export class Match{
     blueScore: number;
     redScore: number;
-    blueTeam:string;
-    redTeam:string;
-    date: Date;
+    blueTeam:Team;
+    redTeam:Team;
+    date: string;
+    finished: boolean;
+    id: string;
 }

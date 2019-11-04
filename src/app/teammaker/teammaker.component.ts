@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { MatSnackBar } from '@angular/material';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
+import { User } from '../services/user';
 
 @Component({
   selector: 'app-teammaker',
@@ -15,13 +16,18 @@ export class TeammakerComponent implements OnInit {
   constructor(private fb: FormBuilder,private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService,private _snackBar: MatSnackBar) { 
     this.teamForm = fb.group({
       Name: ['', Validators.required],
+      Striker: [, Validators.required],
+      Defender: [, Validators.required]
     })
   }
 
   id:string;
   tournament :Tournament;
   name : string;
+  striker : User;
+  defender : User;
   teamForm: FormGroup;
+
   teamControl = new FormControl('', [Validators.required]);
 
   ngOnInit() {
@@ -47,26 +53,49 @@ export class TeammakerComponent implements OnInit {
     });
   }
 
+  getStrikers()
+  {
+    let strikers = [];
+    this.tournament.users.forEach(element => {
+      if(element.role === "Striker")
+      {
+        strikers.push (element);
+      }
+    });
+
+    return strikers;
+  }
+
+  getDefenders()
+  {
+    let defenders = [];
+    this.tournament.users.forEach(element => {
+      if(element.role === "Defender")
+      {
+        defenders.push (element);
+      }
+    });
+
+    return defenders;
+  }
 
   createTeam() {
-    console.log(JSON.stringify(this.tournament));
     let newTeam : Team = {
       name: this.name,
-      defender: "",
-      striker: "",
+      defender: this.defender,
+      striker: this.striker,
       goalFatti: 0,
       goalSubiti: 0,
       lost: 0,
       score: 0,
-      win: 0
+      win: 0,
+      played: 0
     }
-    console.log(JSON.stringify(newTeam));
 
     this.tournament.teams = this.tournament.teams || [];
 
     this.tournament.teams.push(newTeam);
-    console.log(JSON.stringify(this.tournament));
-    this.crudService.addNewTeam(this.tournament).then(resp => {
+    this.crudService.addInfoToTournament(this.tournament).then(resp => {
       this._snackBar.open('🏆 Team created successfully.', '❌', { duration: 5000, verticalPosition: 'top'});
     }).catch(error => {
       this._snackBar.open('⚠️ Error: ' + error, '❌', { duration: 5000, });

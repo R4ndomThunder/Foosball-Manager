@@ -24,7 +24,7 @@ export class CrudService {
     return this.firestore.collection("tournaments").doc(tournament.name.replace(/\s/g, "")).set(tournament);
   }
 
-  addNewTeam(tournament)
+  addInfoToTournament(tournament)
   {
     return this.firestore.collection("tournaments").doc(tournament.id).set(tournament, { merge: true });
   }

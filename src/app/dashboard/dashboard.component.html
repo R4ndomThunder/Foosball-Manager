@@ -11,14 +11,14 @@
 </div>
 <div class="row p-3" *ngFor="let t of tournaments; let i = index">
     <div class="col-1"></div>
-    <div class="col-4 text-center">
+    <div class="col-4 text-center cell-align-center">
         {{t.name}}
     </div>
-    <div class="col-3 text-center">
+    <div class="col-3 text-center cell-align-center">
         {{t.teams?.length}}
     </div>
     <div class="col-3">
-        <a (click)="goToTournament(t.id)" class="btn btn-primary">
+        <a (click)="goToTournament(t.id)" class="btn btn-dark cell-align-center">
             Show
         </a>
     </div>
