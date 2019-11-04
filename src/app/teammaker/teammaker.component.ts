@@ -43,7 +43,9 @@ export class TeammakerComponent implements OnInit {
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
-          users: data.payload.data()["users"]
+          users: data.payload.data()["users"],
+          type: data.payload.data()["type"]
+
         };
         this.tournament = f;
       }

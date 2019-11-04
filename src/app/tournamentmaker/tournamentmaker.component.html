@@ -13,19 +13,28 @@
     <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
         <form [formGroup]="tournamentForm" style="width:100%;">
             <div class="form-row justify-content-center">
-                <div class="form-group col-6">
+                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <label for="inputAddress">*Tournament name:</label>
                     <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
                         placeholder="Foosball Champions" [(ngModel)]="name">
                 </div>
             </div>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <label for="inputAddress">*Type:</label>
+                    <select class="form-control" formControlName="Type" [(ngModel)]="type">
+                        <option>Championship</option>
+                        <option>Tournament</option>
+                    </select>
+                </div>
+            </div>
             <div class="text-center mt-2 mb-5">
-                <button type="submit" class="btn btn-lg btn-outline-primary" [disabled]="tournamentForm.invalid"
+                <button type="submit" class="btn btn-dark" [disabled]="tournamentForm.invalid"
                     (click)="createTournament()">Create</button>
             </div>
         </form>
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        </div>
+    </div>
 </div>

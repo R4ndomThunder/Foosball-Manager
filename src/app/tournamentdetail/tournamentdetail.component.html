@@ -12,7 +12,8 @@
                 Unsubscibe
             </a>
             <form [formGroup]="roleForm">
-                <select *ngIf="isSigned === false" formControlName="PlayerRole" [(ngModel)]="playerRole">
+                <select *ngIf="isSigned === false" class="form-control" formControlName="PlayerRole"
+                    [(ngModel)]="playerRole">
                     <option>Striker</option>
                     <option>Defender</option>
                 </select>
@@ -44,7 +45,6 @@
             {{m.redScore}}
             [{{m.redTeam.name}}]
             ({{m.date | date: 'dd MMM yyyy'}})
-
             <a class="btn btn-dark" *ngIf="m.finished == false" (click)="showMatch(m.id)">
                 Show
             </a>

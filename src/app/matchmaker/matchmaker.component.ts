@@ -44,7 +44,8 @@ export class MatchmakerComponent implements OnInit {
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
-          users: data.payload.data()["users"]
+          users: data.payload.data()["users"],
+          type: data.payload.data()["type"]
         };
         this.tournament = f;
       }
@@ -69,7 +70,7 @@ export class MatchmakerComponent implements OnInit {
         redTeam: this.team1,
         blueTeam: this.team2,
         finished: false,
-        id: this.team1.name + "-" + this.team2.name
+        id: this.team1.name + this.team2.name + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
       }
 
       this.tournament.matches.push(match);

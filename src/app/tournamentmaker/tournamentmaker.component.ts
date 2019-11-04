@@ -16,11 +16,13 @@ export class TournamentmakerComponent implements OnInit {
   tournamentForm: FormGroup;
   name: string;
   tournament: any;
+  type: string;
   tournamentControl = new FormControl('', [Validators.required]);
 
   constructor(private fb: FormBuilder, private crudService: CrudService,public auth: AuthService, private router: Router, private _snackBar: MatSnackBar) {
     this.tournamentForm = fb.group({
       Name: ['', Validators.required],
+      Type: ['', Validators.required],
     })
   }
 
@@ -33,7 +35,8 @@ export class TournamentmakerComponent implements OnInit {
       id: this.name,
       matches: [],
       teams: [],
-      users: []
+      users: [],
+      type: this.type
     }
 
     this.crudService.createNewTournament(t).then(resp => {

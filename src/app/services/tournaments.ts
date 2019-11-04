@@ -8,4 +8,5 @@ export class Tournament{
     teams: Team[];
     matches: Match[];
     users: User[];
+    type: string;
 }
