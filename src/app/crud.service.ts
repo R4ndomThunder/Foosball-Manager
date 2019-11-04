@@ -29,4 +29,8 @@ export class CrudService {
     return this.firestore.collection("tournaments").doc(tournament.id).set(tournament, { merge: true });
   }
 
+  getAppData()
+  {
+    return this.firestore.collection("appdata").snapshotChanges();
+  }
 }
