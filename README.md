@@ -25,3 +25,10 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## ⚠ WARNING ⚠
+
+If you want to use this repo for your project you'll need to do:
+- Create the folder src/environments
+- Make two files called **environment.prod.ts** and **environment.ts**
+- Insert into those files your firebase config
