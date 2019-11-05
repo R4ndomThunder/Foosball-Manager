@@ -30,6 +30,8 @@ import { TournamentmakerComponent } from './tournamentmaker/tournamentmaker.comp
 import { TournamentdetailComponent } from './tournamentdetail/tournamentdetail.component';
 import { MatchmakerComponent } from './matchmaker/matchmaker.component';
 import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
+import { TournamentManagerComponent } from './tournament-manager/tournament-manager.component';
+import { BracketsComponent } from './brackets/brackets.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
     TournamentmakerComponent,
     TournamentdetailComponent,
     MatchmakerComponent,
-    MatchmanagerComponent
+    MatchmanagerComponent,
+    TournamentManagerComponent,
+    BracketsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,7 @@ import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule 
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

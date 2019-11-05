@@ -42,7 +42,8 @@ export class TournamentdetailComponent implements OnInit {
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
-          type: data.payload.data()["type"]
+          type: data.payload.data()["type"],
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
       }
@@ -97,7 +98,19 @@ export class TournamentdetailComponent implements OnInit {
     return signed;
   }
 
-  showMatch(matchid){
+  get isAdmin(): boolean {
+    if (this.tournament.admin == this.auth.userData.uid)
+      return true;
+    else
+      return false;
+  }
+
+  showMatch(matchid) {
     this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: matchid } })
+  }
+
+  manageTournament()
+  {
+    this.router.navigate(['/tournament-manager'],{ queryParams: { id: this.tournament.id } })
   }
 }

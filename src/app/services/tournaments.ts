@@ -9,4 +9,5 @@ export class Tournament{
     matches: Match[];
     users: User[];
     type: string;
+    admin: string;
 }

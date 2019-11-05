@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { formatDate } from '@angular/common';
+import { AuthService } from '../auth-service.service';
 
 @Component({
   selector: 'app-matchmaker',
@@ -24,7 +25,7 @@ export class MatchmakerComponent implements OnInit {
   matchForm: FormGroup;
   matchControl = new FormControl('', [Validators.required]);
 
-  constructor(private fb: FormBuilder, private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService, private _snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService, private _snackBar: MatSnackBar) {
     this.matchForm = fb.group({
       blueTeam: ['', Validators.required],
       redTeam: ['', Validators.required],
@@ -45,7 +46,8 @@ export class MatchmakerComponent implements OnInit {
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
-          type: data.payload.data()["type"]
+          type: data.payload.data()["type"],
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
       }

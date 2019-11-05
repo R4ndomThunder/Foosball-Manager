@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth-service.service';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { CrudService } from '../crud.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Tournament } from '../services/tournaments';
+import { User } from '../services/user';
 
 @Component({
   selector: 'app-tournamentmaker',
@@ -36,9 +36,17 @@ export class TournamentmakerComponent implements OnInit {
       matches: [],
       teams: [],
       users: [],
-      type: this.type
+      type: this.type,
+      admin: this.auth.userData.uid
     }
 
+    let u: User = {
+      name : this.auth.userData.displayName,
+      uid: this.auth.userData.uid,
+      role: "any"
+    }
+
+    t.users.push(u);
     this.crudService.createNewTournament(t).then(resp => {
       this._snackBar.open('🏆 Tournament created successfully.', '❌', { duration: 5000, });
     }).catch(error => {

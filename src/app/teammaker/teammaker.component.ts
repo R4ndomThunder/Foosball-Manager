@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { User } from '../services/user';
+import { AuthService } from '../auth-service.service';
 
 @Component({
   selector: 'app-teammaker',
@@ -13,7 +14,7 @@ import { User } from '../services/user';
   styleUrls: ['./teammaker.component.scss']
 })
 export class TeammakerComponent implements OnInit {
-  constructor(private fb: FormBuilder,private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService,private _snackBar: MatSnackBar) { 
+  constructor(private fb: FormBuilder, public auth: AuthService,private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService,private _snackBar: MatSnackBar) { 
     this.teamForm = fb.group({
       Name: ['', Validators.required],
       Striker: [, Validators.required],
@@ -44,8 +45,8 @@ export class TeammakerComponent implements OnInit {
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
-          type: data.payload.data()["type"]
-
+          type: data.payload.data()["type"],
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
       }

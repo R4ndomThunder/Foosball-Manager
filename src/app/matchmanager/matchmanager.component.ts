@@ -39,7 +39,8 @@ export class MatchmanagerComponent implements OnInit {
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
-          type: data.payload.data()["type"]
+          type: data.payload.data()["type"],
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
         this.tournament.matches.forEach(element => {

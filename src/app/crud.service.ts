@@ -33,4 +33,9 @@ export class CrudService {
   {
     return this.firestore.collection("appdata").snapshotChanges();
   }
+
+  removeTournament(tournament)
+  {
+    return this.firestore.collection("tournaments").doc(tournament.id).delete();
+  }
 }

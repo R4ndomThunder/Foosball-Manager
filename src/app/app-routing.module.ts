@@ -11,6 +11,7 @@ import { TournamentmakerComponent } from './tournamentmaker/tournamentmaker.comp
 import { TournamentdetailComponent } from './tournamentdetail/tournamentdetail.component';
 import { MatchmakerComponent } from './matchmaker/matchmaker.component';
 import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
+import { TournamentManagerComponent } from './tournament-manager/tournament-manager.component';
 
 
 export const routes: Routes = [
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'tournament', component: TournamentdetailComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'matchmaker', component: MatchmakerComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'matchmanager', component: MatchmanagerComponent, canActivate: [SecureInnerPagesGuard]},
+  { path: 'tournament-manager', component: TournamentManagerComponent, canActivate: [SecureInnerPagesGuard]},
   { path: '404', component: HomeComponent},
   { path: '**', redirectTo: '/404'}
 
