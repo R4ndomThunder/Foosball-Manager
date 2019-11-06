@@ -1,4 +1,3 @@
-
 <div class="row mb-5"></div>
 <div class="row">
     <div class="col-2"></div>
@@ -12,7 +11,23 @@
     <div class="col-6">
         <div *ngIf="auth.userData as user">
             <h1>Hi <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h1>
-            <p><strong>Email: {{user.email}}</strong></p>            
+            <p><strong>Email: {{user.email}}</strong></p>
+            <div *ngIf="auth.extraData as extraUserData">
+                <form >
+                    <p><strong>Preferred role:</strong></p>
+                    <select>
+                        <option>Any</option>
+                        <option>Striker</option>
+                        <option>Defender</option>
+                    </select>                    
+                    <a (click)="updateInfo()" class="btn btn-dark text-light ml-3">Update</a>
+                </form>
+                <p><strong>Played: {{extraUserData.played}}</strong></p>
+                <p><strong>Win: {{extraUserData.win}}</strong></p>
+                <p><strong>Lost: {{extraUserData.lost}}</strong></p>
+                <p><strong>GF: {{extraUserData.gf}}</strong></p>
+                <p><strong>GS: {{extraUserData.gs}}</strong></p>
+            </div>
         </div>
     </div>
     <div class="col-4"></div>

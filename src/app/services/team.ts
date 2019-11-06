@@ -1,9 +1,9 @@
-import { User } from './user';
+import { TournamentUser } from './user';
 
 export interface Team {
     name: string;
-    striker: User;
-    defender: User;
+    striker: TournamentUser;
+    defender: TournamentUser;
     goalFatti: number;
     goalSubiti: number;
     win: number;

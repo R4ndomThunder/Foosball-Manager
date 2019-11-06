@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../crud.service';
 import { AuthService } from '../auth-service.service';
-import { User } from '../services/user';
+import { TournamentUser } from '../services/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   tournaments: any;
   logged: boolean;
-  user: User;
+  user: TournamentUser;
   constructor(public auth: AuthService, private crud: CrudService, public router: Router) { }
 
   

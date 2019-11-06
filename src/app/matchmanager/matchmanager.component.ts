@@ -42,10 +42,11 @@ export class MatchmanagerComponent implements OnInit {
           type: data.payload.data()["type"],
           admin: data.payload.data()["admin"]
         };
-        this.tournament = f;
+        this.tournament = new Tournament(f);
+
         this.tournament.matches.forEach(element => {
           if(element.id == this.matchId)
-            this.match = element;
+            this.match = new Match(element);
         });
         console.log(JSON.stringify(this.tournament.matches));
       }

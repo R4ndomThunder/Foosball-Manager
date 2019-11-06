@@ -4,7 +4,7 @@ import { CrudService } from '../crud.service';
 import { Team } from '../services/team';
 import { AuthService } from '../auth-service.service';
 import { Tournament } from '../services/tournaments';
-import { User } from '../services/user';
+import { TournamentUser } from '../services/user';
 import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
 import { Match } from '../services/matches';
 
@@ -36,7 +36,7 @@ export class TournamentdetailComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f = {
+        let f : Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
@@ -62,7 +62,7 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   subscribe() {
-    let newUser: User = {
+    let newUser: TournamentUser = {
       uid: this.auth.userData.uid,
       name: this.auth.userData.displayName,
       role: this.playerRole
@@ -112,5 +112,10 @@ export class TournamentdetailComponent implements OnInit {
   manageTournament()
   {
     this.router.navigate(['/tournament-manager'],{ queryParams: { id: this.tournament.id } })
+  }
+
+  createBrackets()
+  {
+    
   }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
+import { TournamentUser } from './services/user';
+import { extraUserData } from './services/extraUserData';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +15,15 @@ export class CrudService {
   }
   
   getTournamentDetail(tId){
-    return this.firestore.doc("/tournaments/" + tId).snapshotChanges();
+    return this.firestore.collection("tournaments").doc(tId).snapshotChanges();
   }
 
   getPlayerData(userId){
-    return this.firestore.doc("/usersData/" + userId).snapshotChanges();
+    return this.firestore.collection("usersData").doc(userId).snapshotChanges();
   }
 
-  createNewTournament(tournament){
-    return this.firestore.collection("tournaments").doc(tournament.name.replace(/\s/g, "")).set(tournament);
+  setPlayerData(user){
+    return this.firestore.collection("userData").doc(user.uid).set(user);
   }
 
   addInfoToTournament(tournament)
@@ -38,4 +40,25 @@ export class CrudService {
   {
     return this.firestore.collection("tournaments").doc(tournament.id).delete();
   }
+
+  getData()
+  {
+
+  }
+
+  createData()
+  {
+
+  }
+
+  updateData()
+  {
+
+  }
+
+  deleteData()
+  {
+    
+  }
+
 }

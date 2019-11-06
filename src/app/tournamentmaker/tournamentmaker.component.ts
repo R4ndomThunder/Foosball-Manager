@@ -5,7 +5,7 @@ import { CrudService } from '../crud.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Tournament } from '../services/tournaments';
-import { User } from '../services/user';
+import { TournamentUser } from '../services/user';
 
 @Component({
   selector: 'app-tournamentmaker',
@@ -30,24 +30,12 @@ export class TournamentmakerComponent implements OnInit {
   }
 
   createTournament() {
-    var t : Tournament= {
-      name: this.name,
-      id: this.name,
-      matches: [],
-      teams: [],
-      users: [],
-      type: this.type,
-      admin: this.auth.userData.uid
-    }
+    var t = new Tournament(t, true, this.name, this.auth.userData.uid, this.type);
 
-    let u: User = {
-      name : this.auth.userData.displayName,
-      uid: this.auth.userData.uid,
-      role: "any"
-    }
+    var u = new TournamentUser(u, true, this.auth.userData.uid, this.auth.userData.displayName, "Any");   
 
     t.users.push(u);
-    this.crudService.createNewTournament(t).then(resp => {
+    this.crudService.addInfoToTournament(t).then(resp => {
       this._snackBar.open('🏆 Tournament created successfully.', '❌', { duration: 5000, });
     }).catch(error => {
       this._snackBar.open('⚠️ Error: ' + error, '❌', { duration: 5000, });
