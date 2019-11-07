@@ -40,14 +40,15 @@ export class TeammakerComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f = {
+        let f : Tournament= {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = f;
       }

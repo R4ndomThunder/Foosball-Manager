@@ -41,14 +41,15 @@ export class MatchmakerComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f = {
+        let f : Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = f;
       }
@@ -85,7 +86,7 @@ export class MatchmakerComponent implements OnInit {
       this.router.navigate(['/matchmanager'], { queryParams: { id: match.id} });
     }
     else{
-      alert("You cannot make a match with the same team for all side");
+      this._snackBar.show("⚠ You cannot make a match with the same team for all side");
     }
   }
 }

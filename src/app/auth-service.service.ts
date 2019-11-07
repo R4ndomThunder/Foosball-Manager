@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from '@angular/material';
 import { CrudService } from './crud.service';
 import { extraUserData } from './services/extraUserData';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     public crud: CrudService
   ) {
     /* Saving user data in localstorage when 
@@ -52,7 +53,7 @@ export class AuthService {
           this.router.navigate(['dashboard']);
         })
       }).catch((error) => {
-        window.alert(error)
+        this.snackBar.show("⚠ SignIn Error: " + error);
       })
   }
 
@@ -60,9 +61,9 @@ export class AuthService {
   SigninWithGoogle() {
     return this.OAuthProvider(new auth.GoogleAuthProvider())
       .then(res => {
-        console.log('Successfully logged in!')
+        this.snackBar.show('🎉 Successfully logged in!')
       }).catch(error => {
-        console.log(error)
+        this.snackBar.show("⚠ SignIn Error: " + error)
       });
   }
 

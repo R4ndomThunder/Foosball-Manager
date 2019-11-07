@@ -17,9 +17,10 @@ export class TournamentmakerComponent implements OnInit {
   name: string;
   tournament: any;
   type: string;
+  randomize: boolean;
   tournamentControl = new FormControl('', [Validators.required]);
 
-  constructor(private fb: FormBuilder, private crudService: CrudService,public auth: AuthService, private router: Router, private _snackBar: SnackbarService) {
+  constructor(private fb: FormBuilder, private crudService: CrudService, public auth: AuthService, private router: Router, private _snackBar: SnackbarService) {
     this.tournamentForm = fb.group({
       Name: ['', Validators.required],
       Type: ['', Validators.required],
@@ -29,10 +30,20 @@ export class TournamentmakerComponent implements OnInit {
   ngOnInit() {
   }
 
-  createTournament() {
-    var t = new Tournament(t, true, this.name, this.auth.userData.uid, this.type);
+  setValue(i, e) {
+    if (e.checked) {
+      this.randomize = true;
+    }
+    else {
+      this.randomize = false;
+    }
+  }
 
-    var u = new TournamentUser(u, true, this.auth.userData.uid, this.auth.userData.displayName, this.auth.extraData.preferredRole);   
+  createTournament() {
+    var t = new Tournament(t, true, this.name, this.auth.userData.uid, this.type, this.randomize);
+
+    var role = this.auth.extraData != undefined ? this.auth.extraData.preferredRole : "Any";
+    var u = new TournamentUser(u, true, this.auth.userData.uid, this.auth.userData.displayName, role);
 
     t.users.push(u);
     this.crudService.addInfoToTournament(t).then(resp => {

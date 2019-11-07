@@ -7,9 +7,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatTableModule} from '@angular/material/table';
+
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
@@ -67,7 +70,8 @@ import { BracketsComponent } from './brackets/brackets.component';
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
-    MatTableModule 
+    MatTableModule, 
+    MatSlideToggleModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

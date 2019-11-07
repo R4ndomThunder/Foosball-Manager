@@ -10,8 +10,9 @@ export class Tournament {
     users: TournamentUser[];
     type: string;
     admin: string;
+    randomizeTeams: boolean;
 
-    constructor(tournament: Tournament, newObject?: boolean, name?: string, adminUID?: string, type?: string) {
+    constructor(tournament: Tournament, newObject?: boolean, name?: string, adminUID?: string, type?: string, randomizeTeams?:boolean) {
         if (newObject) {
             tournament = {
                 name: name,
@@ -20,7 +21,8 @@ export class Tournament {
                 teams: [],
                 users: [],
                 type: type,
-                admin: adminUID
+                admin: adminUID,
+                randomizeTeams: randomizeTeams,
             }
         }
         Object.assign(this, tournament);

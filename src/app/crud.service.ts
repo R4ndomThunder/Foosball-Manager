@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import { TournamentUser } from './services/user';
 import { extraUserData } from './services/extraUserData';
+import { Tournament } from './services/tournaments';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,9 @@ export class CrudService {
     return this.firestore.collection("userData").doc(user.uid).set(user);
   }
 
-  addInfoToTournament(tournament)
+  addInfoToTournament(tournament : Tournament)
   {
-    return this.firestore.collection("tournaments").doc(tournament.id).set(tournament, { merge: true });
+    return this.firestore.collection("tournaments").doc(tournament.id).set(tournament);
   }
 
   getAppData()
@@ -40,25 +41,4 @@ export class CrudService {
   {
     return this.firestore.collection("tournaments").doc(tournament.id).delete();
   }
-
-  getData()
-  {
-
-  }
-
-  createData()
-  {
-
-  }
-
-  updateData()
-  {
-
-  }
-
-  deleteData()
-  {
-    
-  }
-
 }

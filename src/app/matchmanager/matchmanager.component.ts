@@ -33,14 +33,15 @@ export class MatchmanagerComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.tournamentId).subscribe(data => {
       if (data.payload.exists) {
-        let f = {
+        let f : Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = new Tournament(f);
 
@@ -48,7 +49,6 @@ export class MatchmanagerComponent implements OnInit {
           if(element.id == this.matchId)
             this.match = new Match(element);
         });
-        console.log(JSON.stringify(this.tournament.matches));
       }
       else {
         this.router.navigate(['/404']);

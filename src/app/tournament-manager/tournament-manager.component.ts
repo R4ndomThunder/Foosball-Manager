@@ -14,21 +14,22 @@ import { SnackbarService } from '../snackbar.service';
 export class TournamentManagerComponent implements OnInit {
 
   tournamentForm: FormGroup;
-  id : string;
+  id: string;
   name: string;
   type: string;
-  tournament:Tournament;
+  randomize: boolean;
+  tournament: Tournament;
   tournamentControl = new FormControl('', [Validators.required]);
 
-  constructor(public crud: CrudService, public auth: AuthService,private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar : SnackbarService) {
+  constructor(public crud: CrudService, public auth: AuthService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar: SnackbarService) {
     this.tournamentForm = fb.group({
       Name: ['', Validators.required],
       Type: ['', Validators.required],
     })
-   }
+  }
 
   ngOnInit() {
-    
+
     this.route.queryParams
       .subscribe(params => {
         this.id = params.id;
@@ -36,18 +37,20 @@ export class TournamentManagerComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f = {
+        let f: Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = f;
         this.name = this.tournament.name;
         this.type = this.tournament.type;
+        this.randomize = this.tournament.randomizeTeams;
       }
       else {
         this.router.navigate(['/404']);
@@ -55,17 +58,27 @@ export class TournamentManagerComponent implements OnInit {
     });
   }
 
+  setValue(i, e) {
+    if(e.checked)
+    {
+      this.randomize = true;
+    }
+    else
+    { 
+      this.randomize = false;
+    }
+  }
 
-  closeTournament()
-  {
+
+  closeTournament() {
     //Remove tournament
     this.crud.removeTournament(this.tournament);
   }
 
-  updateTournament()
-  {
+  updateTournament() {
     this.tournament.name = this.name;
     this.tournament.type = this.type;
+    this.tournament.randomizeTeams = this.randomize;
 
     this.crud.addInfoToTournament(this.tournament).then(resp => {
 

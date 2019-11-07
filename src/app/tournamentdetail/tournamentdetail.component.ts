@@ -44,7 +44,8 @@ export class TournamentdetailComponent implements OnInit {
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = f;
       }
