@@ -7,6 +7,7 @@ import { Tournament } from '../services/tournaments';
 import { TournamentUser } from '../services/user';
 import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
 import { Match } from '../services/matches';
+import { SnackbarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-tournamentdetail',
@@ -22,7 +23,7 @@ export class TournamentdetailComponent implements OnInit {
   roleForm: FormGroup;
   match: Match;
 
-  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, public _snackBar: SnackbarService) {
     this.roleForm = this.fb.group({
       PlayerRole: ['', Validators.required]
     })
@@ -69,9 +70,9 @@ export class TournamentdetailComponent implements OnInit {
     }
     this.tournament.users.push(newUser);
     this.crud.addInfoToTournament(this.tournament).then(resp => {
-      // this._snackBar.open('🏆 Team created successfully.', '❌', { duration: 5000, verticalPosition: 'top'});
+      this._snackBar.show('👤 Subscribed successfully.');
     }).catch(error => {
-      // this._snackBar.open('⚠️ Error: ' + error, '❌', { duration: 5000, });
+      this._snackBar.show('⚠️ Error: ' + error);
     });
     this.router.navigate(['/tournament'], { queryParams: { id: this.id } });
   }
@@ -82,9 +83,9 @@ export class TournamentdetailComponent implements OnInit {
     this.tournament.users.splice(index, 1);
 
     this.crud.addInfoToTournament(this.tournament).then(resp => {
-      // this._snackBar.open('🏆 Team created successfully.', '❌', { duration: 5000, verticalPosition: 'top'});
+      this._snackBar.show('👤 Unsubscribed successfully.');
     }).catch(error => {
-      // this._snackBar.open('⚠️ Error: ' + error, '❌', { duration: 5000, });
+      this._snackBar.show('⚠️ Error: ' + error);
     });
     this.router.navigate(['/tournament'], { queryParams: { id: this.id } });
   }

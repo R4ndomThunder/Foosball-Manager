@@ -134,3 +134,14 @@ $foosballmanager-theme: mat-light-theme($foosballmanager-primary, $foosballmanag
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.snack-style{
+  background-color: #20222f;
+}
+
+.cdk-overlay-container{
+  z-index:5000 !important;
+}
+

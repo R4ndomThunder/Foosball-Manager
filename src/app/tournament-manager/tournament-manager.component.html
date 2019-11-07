@@ -1,5 +1,28 @@
 <div class="flex-container container-align-center">
-    <a class="btn btn-dark" (click)="closeTournament()">
-        Close Tournament
-    </a>
+    <form [formGroup]="tournamentForm" style="width:100%;">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <label for="inputAddress">*Tournament name:</label>
+                <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
+                    placeholder="Foosball Champions" [(ngModel)]="name">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <label for="inputAddress">*Type:</label>
+                <select class="form-control" formControlName="Type" [(ngModel)]="type">
+                    <option>Championship</option>
+                    <option>Tournament</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <a (click)="updateTournament()" class="btn btn-dark mr-2">
+                Update
+            </a>
+            <a class="btn btn-danger ml-2" (click)="closeTournament()">
+                Close Tournament
+            </a>
+        </div>
+    </form>
 </div>

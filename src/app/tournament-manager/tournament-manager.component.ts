@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { CrudService } from '../crud.service';
 import { Tournament } from '../services/tournaments';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { SnackbarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-tournament-manager',
@@ -11,10 +13,19 @@ import { AuthService } from '../auth-service.service';
 })
 export class TournamentManagerComponent implements OnInit {
 
+  tournamentForm: FormGroup;
   id : string;
+  name: string;
+  type: string;
   tournament:Tournament;
+  tournamentControl = new FormControl('', [Validators.required]);
 
-  constructor(public crud: CrudService, public auth: AuthService,private route: ActivatedRoute, private router: Router) { }
+  constructor(public crud: CrudService, public auth: AuthService,private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar : SnackbarService) {
+    this.tournamentForm = fb.group({
+      Name: ['', Validators.required],
+      Type: ['', Validators.required],
+    })
+   }
 
   ngOnInit() {
     
@@ -35,6 +46,8 @@ export class TournamentManagerComponent implements OnInit {
           admin: data.payload.data()["admin"]
         };
         this.tournament = f;
+        this.name = this.tournament.name;
+        this.type = this.tournament.type;
       }
       else {
         this.router.navigate(['/404']);
@@ -47,6 +60,20 @@ export class TournamentManagerComponent implements OnInit {
   {
     //Remove tournament
     this.crud.removeTournament(this.tournament);
+  }
+
+  updateTournament()
+  {
+    this.tournament.name = this.name;
+    this.tournament.type = this.type;
+
+    this.crud.addInfoToTournament(this.tournament).then(resp => {
+
+      this._snackBar.show('🏆 Tournament update successfully.');
+    }).catch(error => {
+      this._snackBar.show('⚠️ Error: ' + error);
+    });
+    this.router.navigate(['dashboard']);
   }
 
 }

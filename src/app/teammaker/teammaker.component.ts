@@ -7,6 +7,7 @@ import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { TournamentUser } from '../services/user';
 import { AuthService } from '../auth-service.service';
+import { SnackbarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-teammaker',
@@ -14,7 +15,7 @@ import { AuthService } from '../auth-service.service';
   styleUrls: ['./teammaker.component.scss']
 })
 export class TeammakerComponent implements OnInit {
-  constructor(private fb: FormBuilder, public auth: AuthService,private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService,private _snackBar: MatSnackBar) { 
+  constructor(private fb: FormBuilder, public auth: AuthService,private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService,private _snackBar: SnackbarService) { 
     this.teamForm = fb.group({
       Name: ['', Validators.required],
       Striker: [, Validators.required],
@@ -99,9 +100,9 @@ export class TeammakerComponent implements OnInit {
 
     this.tournament.teams.push(newTeam);
     this.crudService.addInfoToTournament(this.tournament).then(resp => {
-      this._snackBar.open('🏆 Team created successfully.', '❌', { duration: 5000, verticalPosition: 'top'});
+      this._snackBar.show('⚽ Team created successfully.');
     }).catch(error => {
-      this._snackBar.open('⚠️ Error: ' + error, '❌', { duration: 5000, });
+      this._snackBar.show('⚠️ Error: ' + error);
     });
     this.router.navigate(['/tournament'], { queryParams: { id:  this.id} });
   }
