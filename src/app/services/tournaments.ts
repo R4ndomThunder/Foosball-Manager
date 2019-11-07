@@ -1,6 +1,7 @@
 import { Team } from './team';
 import { Match } from './matches';
 import { TournamentUser } from './user';
+import { TournamentManagerComponent } from '../tournament-manager/tournament-manager.component';
 
 export class Tournament {
     id: string;
@@ -25,6 +26,6 @@ export class Tournament {
                 randomizeTeams: randomizeTeams,
             }
         }
-        Object.assign(this, tournament);
+        return tournament;
     }
 }

@@ -65,16 +65,16 @@ export class MatchmakerComponent implements OnInit {
 
   createMatch() {
 
-    if (this.team1.name != this.team2.name) {
+    if (this.team1.id != this.team2.id) {
 
       let match: Match = {
         date: formatDate(new Date(), "dd MMM yyyy", 'en'),
         blueScore: 0,
         redScore: 0,
-        redTeam: this.team1,
-        blueTeam: this.team2,
+        redTeamId: this.team1.id,
+        blueTeamId:  this.team2.id,
         finished: false,
-        id: this.team1.name + this.team2.name + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
+        id: this.team1.id + this.team2.id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
       }
 
       this.tournament.matches.push(match);
@@ -83,7 +83,8 @@ export class MatchmakerComponent implements OnInit {
       }).catch(error => {
         this._snackBar.show('⚠️ Error: ' + error);
       });
-      this.router.navigate(['/matchmanager'], { queryParams: { id: match.id} });
+      console.log()
+      this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id }});
     }
     else{
       this._snackBar.show("⚠ You cannot make a match with the same team for all side");

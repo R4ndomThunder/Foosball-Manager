@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div *ngIf="tournament.type == 'Championship'">
-                    
+
                 </div>
             </div>
 
@@ -50,8 +50,9 @@
             Name | Score | Win | Lost | Played | GF | GS
         </div>
         <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
-            {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}}
-        </div>
+            {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}} 
+            <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t) && tournament.randomizeTeams === false">Edit</a>
+        </div>        
     </div>
 
     <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
@@ -60,7 +61,7 @@
             [Team1] ScoreT1 - ScoreT2 [Team2] (Date)
         </div>
         <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center"
-            *ngFor="let m of tournament.matches; let i = index">
+            *ngFor="let m of matches; let i = index">
             [{{m.blueTeam.name}}]
             {{m.blueScore}} -
             {{m.redScore}}

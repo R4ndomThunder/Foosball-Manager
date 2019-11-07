@@ -35,6 +35,7 @@ import { MatchmakerComponent } from './matchmaker/matchmaker.component';
 import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
 import { TournamentManagerComponent } from './tournament-manager/tournament-manager.component';
 import { BracketsComponent } from './brackets/brackets.component';
+import { TeammanagerComponent } from './teammanager/teammanager.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { BracketsComponent } from './brackets/brackets.component';
     MatchmakerComponent,
     MatchmanagerComponent,
     TournamentManagerComponent,
-    BracketsComponent
+    BracketsComponent,
+    TeammanagerComponent
   ],
   imports: [
     BrowserModule,

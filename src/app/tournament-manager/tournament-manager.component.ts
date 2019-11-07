@@ -58,13 +58,11 @@ export class TournamentManagerComponent implements OnInit {
     });
   }
 
-  setValue(i, e) {
-    if(e.checked)
-    {
+  setValue(e) {
+    if (e.checked) {
       this.randomize = true;
     }
-    else
-    { 
+    else {
       this.randomize = false;
     }
   }
@@ -72,7 +70,10 @@ export class TournamentManagerComponent implements OnInit {
 
   closeTournament() {
     //Remove tournament
-    this.crud.removeTournament(this.tournament);
+    let snack = this._snackBar.showWithAction("⚠ Are you sure to close this tournament?","Yes!");
+    snack.onAction().subscribe(() =>{
+      this.crud.removeTournament(this.tournament);
+    });
   }
 
   updateTournament() {
@@ -86,7 +87,7 @@ export class TournamentManagerComponent implements OnInit {
     }).catch(error => {
       this._snackBar.show('⚠️ Error: ' + error);
     });
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['tournament'], {queryParams: {id: this.tournament.id}});
   }
 
 }

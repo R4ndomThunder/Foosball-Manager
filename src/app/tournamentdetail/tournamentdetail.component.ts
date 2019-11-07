@@ -23,6 +23,12 @@ export class TournamentdetailComponent implements OnInit {
   roleForm: FormGroup;
   match: Match;
 
+  matches: any;
+
+  dataSource = this.tournament;
+  expandedElement: Tournament | null;
+  columnsToDisplay = ["Name", "Score", "Win", "Lost", "Played", "GF", "GS"]
+
   constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, public _snackBar: SnackbarService) {
     this.roleForm = this.fb.group({
       PlayerRole: ['', Validators.required]
@@ -37,7 +43,7 @@ export class TournamentdetailComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f : Tournament = {
+        let f = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
@@ -48,6 +54,11 @@ export class TournamentdetailComponent implements OnInit {
           randomizeTeams: data.payload.data()["randomizeTeams"]
         };
         this.tournament = f;
+        this.matches = this.tournament.matches;
+        this.matches.forEach(element => {
+          element.blueTeam = this.tournament.teams.find(t => t.id == element.blueTeamId);
+          element.redTeam = this.tournament.teams.find(t => t.id == element.redTeamId);
+        });
       }
       else {
         this.router.navigate(['/404']);
@@ -93,31 +104,42 @@ export class TournamentdetailComponent implements OnInit {
 
   get isSigned(): boolean {
     let signed: boolean = false;
-    this.tournament.users.forEach(element => {
-      if (element.uid == this.auth.userData.uid)
-        signed = true;
-    });
+    if (this.tournament != null) {
+      this.tournament.users.forEach(element => {
+        if (element.uid == this.auth.userData.uid)
+          signed = true;
+      });
+    }
     return signed;
   }
 
   get isAdmin(): boolean {
-    if (this.tournament.admin == this.auth.userData.uid)
+    if (this.tournament != null && this.tournament.admin == this.auth.userData.uid)
       return true;
     else
       return false;
+  }
+
+  inThisTeam(t: Team): boolean {
+    if (t.strikerId == this.auth.userData.uid || t.defenderId == this.auth.userData.uid)
+      return true;
+    else
+      return false;
+  }
+
+  editTeam(team) {
+    this.router.navigate(['/teammanager'], { queryParams: { tournament: this.tournament.id, team: team.id } })
   }
 
   showMatch(matchid) {
     this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: matchid } })
   }
 
-  manageTournament()
-  {
-    this.router.navigate(['/tournament-manager'],{ queryParams: { id: this.tournament.id } })
+  manageTournament() {
+    this.router.navigate(['/tournament-manager'], { queryParams: { id: this.tournament.id } })
   }
 
-  createBrackets()
-  {
-    
+  createBrackets() {
+
   }
 }

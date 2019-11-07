@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
     </div>
 
@@ -30,7 +30,7 @@
             </div>
             <div class="form-row justify-content-center">
                     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <mat-slide-toggle [color]="primary" (change)="setValue(randomize, $event)" [checked]="randomize === true">
+                        <mat-slide-toggle [color]="primary" (change)="setValue($event)" [checked]="randomize === true">
                             Randomize Teams
                         </mat-slide-toggle>
                     </div>

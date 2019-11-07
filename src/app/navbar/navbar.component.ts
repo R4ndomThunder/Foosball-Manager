@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   GoToProfile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile'], { queryParams: { id: this.auth.userData.uid } });
   }
 
 }

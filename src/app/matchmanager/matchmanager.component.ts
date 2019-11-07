@@ -6,6 +6,8 @@ import { FormBuilder } from '@angular/forms';
 import { Match } from '../services/matches';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
+import { SnackbarService } from '../snackbar.service';
+import { TournamentUser } from '../services/user';
 
 @Component({
   selector: 'app-matchmanager',
@@ -22,7 +24,12 @@ export class MatchmanagerComponent implements OnInit {
   team1: Team;
   team2: Team;
 
-  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
+  strTeam1: TournamentUser;
+  strTeam2: TournamentUser;
+  dfsTeam1: TournamentUser;
+  dfsTeam2: TournamentUser;
+
+  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private snack: SnackbarService) { }
 
   ngOnInit() {
     this.route.queryParams
@@ -33,7 +40,7 @@ export class MatchmanagerComponent implements OnInit {
 
     this.crud.getTournamentDetail(this.tournamentId).subscribe(data => {
       if (data.payload.exists) {
-        let f : Tournament = {
+        let f: Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
@@ -46,9 +53,21 @@ export class MatchmanagerComponent implements OnInit {
         this.tournament = new Tournament(f);
 
         this.tournament.matches.forEach(element => {
-          if(element.id == this.matchId)
+          if (element.id == this.matchId)
             this.match = new Match(element);
         });
+
+        this.team1 = this.tournament.teams.find(t => t.id == this.match.blueTeamId)
+
+
+        this.dfsTeam1 = this.tournament.users.find(u => u.uid == this.team1.defenderId)
+        this.strTeam1 = this.tournament.users.find(u => u.uid == this.team1.strikerId)
+
+        this.team2 = this.tournament.teams.find(t => t.id == this.match.redTeamId)
+
+
+        this.dfsTeam2 = this.tournament.users.find(u => u.uid == this.team2.defenderId)
+        this.strTeam2 = this.tournament.users.find(u => u.uid == this.team2.strikerId)
       }
       else {
         this.router.navigate(['/404']);
@@ -56,20 +75,22 @@ export class MatchmanagerComponent implements OnInit {
     });
   }
 
-  addScore(player, team)
-  {
+  addScore(player, team) {
 
   }
 
-  stopMatch()
-  {
-    this.tournament.matches.forEach(element => {
-      if(element.id == this.matchId)
-        element.finished = true;
-    });
+  stopMatch() {
+    let snackRes = this.snack.showWithAction("⚠ Are you sure to stop this match?", "✔")
+    snackRes.onAction().subscribe(() => {
+      this.tournament.matches.forEach(element => {
+        if (element.id == this.matchId) {
+          element.finished = true;
+        }
+      });
 
-    this.crud.addInfoToTournament(this.tournament);
-    this.router.navigate(["/tournament"],{ queryParams: { id: this.tournament.id}})
+      this.crud.addInfoToTournament(this.tournament);
+      this.router.navigate(["/tournament"], { queryParams: { id: this.tournament.id } })
+    });
   }
 
 }

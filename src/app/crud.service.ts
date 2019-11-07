@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { TournamentUser } from './services/user';
 import { extraUserData } from './services/extraUserData';
 import { Tournament } from './services/tournaments';
@@ -11,34 +11,31 @@ export class CrudService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  getTournaments(){
+  getTournaments() {
     return this.firestore.collection("tournaments").snapshotChanges();
   }
-  
-  getTournamentDetail(tId){
+
+  getTournamentDetail(tId) {
     return this.firestore.collection("tournaments").doc(tId).snapshotChanges();
   }
 
-  getPlayerData(userId){
-    return this.firestore.collection("usersData").doc(userId).snapshotChanges();
+  getPlayerData(userId) {
+    return this.firestore.collection("userData").doc(userId).snapshotChanges();
   }
 
-  setPlayerData(user){
-    return this.firestore.collection("userData").doc(user.uid).set(user);
+  setPlayerData(userId, user) {
+    return this.firestore.collection("userData").doc(userId).set(user);
   }
 
-  addInfoToTournament(tournament : Tournament)
-  {
+  addInfoToTournament(tournament) {
     return this.firestore.collection("tournaments").doc(tournament.id).set(tournament);
   }
 
-  getAppData()
-  {
+  getAppData() {
     return this.firestore.collection("appdata").snapshotChanges();
   }
 
-  removeTournament(tournament)
-  {
+  removeTournament(tournament) {
     return this.firestore.collection("tournaments").doc(tournament.id).delete();
   }
 }

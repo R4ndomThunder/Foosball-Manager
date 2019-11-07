@@ -5,5 +5,4 @@ export class extraUserData {
     played: number;
     preferredRole: string;
     win: number;
-    uid: string;
 }

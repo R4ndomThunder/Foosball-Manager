@@ -17,7 +17,9 @@ export class TournamentmakerComponent implements OnInit {
   name: string;
   tournament: any;
   type: string;
-  randomize: boolean;
+
+  randomize: boolean = false;
+
   tournamentControl = new FormControl('', [Validators.required]);
 
   constructor(private fb: FormBuilder, private crudService: CrudService, public auth: AuthService, private router: Router, private _snackBar: SnackbarService) {
@@ -30,7 +32,7 @@ export class TournamentmakerComponent implements OnInit {
   ngOnInit() {
   }
 
-  setValue(i, e) {
+  setValue(e) {
     if (e.checked) {
       this.randomize = true;
     }
@@ -40,11 +42,27 @@ export class TournamentmakerComponent implements OnInit {
   }
 
   createTournament() {
-    var t = new Tournament(t, true, this.name, this.auth.userData.uid, this.type, this.randomize);
+    // let t = {
+    //   admin: this.auth.userData.uid,
+    //   name: this.name,
+    //   id: this.name.replace(/\s/g, ""),
+    //   matches: [],
+    //   teams: [],
+    //   users: [],
+    //   type: this.type,
+    //   randomizeTeams: this.randomize,
+    // }
+
+    let t : Tournament = new Tournament(null, true, this.name, this.auth.userData.uid, this.type, this.randomize);
 
     var role = this.auth.extraData != undefined ? this.auth.extraData.preferredRole : "Any";
-    var u = new TournamentUser(u, true, this.auth.userData.uid, this.auth.userData.displayName, role);
+    // var u = new TournamentUser(u, true, this.auth.userData.uid, this.auth.userData.displayName, role);
 
+    var u = {
+      name: this.auth.userData.displayName,
+      uid: this.auth.userData.uid,
+      role: role
+    };
     t.users.push(u);
     this.crudService.addInfoToTournament(t).then(resp => {
       this._snackBar.show('🏆 Tournament created successfully.');

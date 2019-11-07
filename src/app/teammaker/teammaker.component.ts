@@ -87,14 +87,15 @@ export class TeammakerComponent implements OnInit {
   createTeam() {
     let newTeam : Team = {
       name: this.name,
-      defender: this.defender,
-      striker: this.striker,
+      defenderId: this.defender.uid,
+      strikerId: this.striker.uid,
       goalFatti: 0,
       goalSubiti: 0,
       lost: 0,
       score: 0,
       win: 0,
-      played: 0
+      played: 0,
+      id:  this.name.replace(/\s/g, "")
     }
 
     this.tournament.teams = this.tournament.teams || [];

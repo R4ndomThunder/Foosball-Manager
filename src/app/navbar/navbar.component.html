@@ -13,7 +13,7 @@
         <img src="{{(user.photoURL)? user.photoURL : 'https://www.studiumgbg.se/wp-content/uploads/2019/03/Skuggbild.png'}}"
             class="img-fluid rounded-circle" width="40em" mat-button [matMenuTriggerFor]="menu">
         <mat-menu #menu="matMenu">
-            <a [routerLink]="['profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}"
+            <a (click)="GoToProfile()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}"
                 mat-menu-item>
                 <fa-icon [icon]="['fas','user']"></fa-icon> Profile
             </a>
