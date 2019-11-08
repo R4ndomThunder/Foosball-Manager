@@ -1,47 +1,66 @@
-<div class="v-flex-container container-align-center">
-    <div class="flex-cell cell-3 cell-align-center">
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <h2 class="text-center">- {{tournament.name}} -</h2>
-        <div class="flex-cell cell-3 cell-align-center justify-content-center">
-            <!-- Admin buttons -->
-            <div *ngIf="isAdmin === true && isSigned === true">
-                <a class="btn-dark btn m-3" style="color:white;" (click)="manageTournament()">
-                    Manage Tournament
-                </a>
-                <div *ngIf="tournament.type == 'Tournament'">
-                    <a class="btn btn-dark m-3" style="color:white;" (click)="createBrackets()">
-                        Generate Brackets
-                    </a>
-                </div>
-                <div *ngIf="tournament.type == 'Championship'">
-
-                </div>
-            </div>
-
-            <!-- User buttons -->
-            <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="createNewTeam(id)">
-                New team
-            </a>
-            <div *ngIf="tournament.type == 'Championship'">
-                <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="createNewMatch(id)">
-                    New match
-                </a>
-                <a *ngIf="isSigned === true" class="btn btn-dark m-3" style="color:white;" (click)="Unsubscibe()">
-                    Unsubscibe
-                </a>
-            </div>
-            <form [formGroup]="roleForm">
-                <select *ngIf="isSigned === false" class="form-control" formControlName="PlayerRole"
-                    [(ngModel)]="playerRole">
-                    <option>Striker</option>
-                    <option>Defender</option>
-                </select>
-                <a *ngIf="isSigned === false" class="btn btn-dark m-3" style="color:white;" (click)="subscribe()">
-                    Subscribe
-                </a>
-            </form>
-        </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 justify-content-center"></div>
+    <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
+        <!-- Admin buttons -->
+        <div *ngIf="isAdmin === true && isSigned === true">
+            <a class="btn-dark btn m-3" style="color:white;" (click)="manageTournament()">
+                Manage Tournament
+            </a>
+            <div *ngIf="tournament.type == 'Tournament'">
+                <a class="btn btn-dark m-3" style="color:white;" (click)="createBrackets()">
+                    Generate Brackets
+                </a>
+            </div>
+            <div *ngIf="tournament.type == 'Championship'">
+                <div *ngIf="teamRandomized() == true">
+                    <a class="btn btn-dark m-3" style="color:white;" (click)="createTeams()">
+                        Generate Teams
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 justify-content-center"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 justify-content-center"></div>
+    <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
+        <!-- User buttons -->
+        <div *ngIf="tournament.type == 'Championship'">
+            <a *ngIf="isSigned === true && teamRandomized() === false" class="btn btn-dark m-3"
+                (click)="createNewTeam(id)">
+                New team
+            </a>
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="createNewMatch(id)">
+                New match
+            </a>
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="Unsubscibe()">
+                Unsubscibe
+            </a>
+        </div>
+
+        <form [formGroup]="roleForm">
+            <select *ngIf="isSigned === false" class="form-control" formControlName="PlayerRole"
+                [(ngModel)]="playerRole">
+                <option>Striker</option>
+                <option>Defender</option>
+            </select>
+            <a *ngIf="isSigned === false" class="btn btn-dark m-3" (click)="subscribe()">
+                Subscribe
+            </a>
+        </form>
+    </div>
+    <div class="col-lg-4 col-md-4 justify-content-center"></div>
+</div>
+
+<div class="row">
 <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
 
     <div class="flex-cell cell-3 cell-align-center">
@@ -50,9 +69,10 @@
             Name | Score | Win | Lost | Played | GF | GS
         </div>
         <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
-            {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}} 
-            <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t) && tournament.randomizeTeams === false">Edit</a>
-        </div>        
+            {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}}
+            <a (click)="editTeam(t)" class="btn btn-dark"
+                *ngIf="inThisTeam(t) && tournament.randomizeTeams === false">Edit</a>
+        </div>
     </div>
 
     <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">

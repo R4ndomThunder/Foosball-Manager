@@ -11,7 +11,7 @@ export class SnackbarService {
   show(message: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = ['snack-style'];
-    config.verticalPosition = 'top';
+    config.verticalPosition = 'bottom';
     config.horizontalPosition = 'center';
     config.duration = 2500;
     this.zone.run(() => this.snack.open(message, '❌', config));
@@ -21,7 +21,7 @@ export class SnackbarService {
   {
     const config = new MatSnackBarConfig();
     config.panelClass = ['snack-style'];
-    config.verticalPosition = 'top';
+    config.verticalPosition = 'bottom';
     config.horizontalPosition = 'center';
     config.duration = 2500;
     return this.snack.open(message, actionText, config);

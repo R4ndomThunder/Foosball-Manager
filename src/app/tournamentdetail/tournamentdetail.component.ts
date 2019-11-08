@@ -121,10 +121,12 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   inThisTeam(t: Team): boolean {
-    if (t.strikerId == this.auth.userData.uid || t.defenderId == this.auth.userData.uid)
-      return true;
-    else
-      return false;
+    return (t.strikerId == this.auth.userData.uid || t.defenderId == this.auth.userData.uid)
+
+  }
+
+  teamRandomized() {
+    return this.tournament.randomizeTeams
   }
 
   editTeam(team) {
@@ -140,6 +142,11 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   createBrackets() {
+
+  }
+
+  createTeams()
+  {
 
   }
 }

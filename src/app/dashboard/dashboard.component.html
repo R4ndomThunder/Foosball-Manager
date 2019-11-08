@@ -1,27 +1,30 @@
-<div class="row">
-    <div class="col-1"></div>
-    <div class="col-4 text-center">
-        Tournament Name:
+<div class="row justify-content-center align-items-center header text-center">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
+        <h2>Active tournaments:</h2>
     </div>
-    <div class="col-3 text-center">
-        Teams:
-    </div>
-    <div class="col-3"></div>
-    <div class="col-1"></div>
 </div>
-<div class="row p-3" *ngFor="let t of tournaments; let i = index">
-    <div class="col-1"></div>
-    <div class="col-4 text-center cell-align-center">
+
+<div class="row header align-items-center justify-content-center p-2">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4 text-center">
+        <p>Tournament Name:</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4 text-center">
+        <p>Teams:</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4 text-center">
+        <p>Action:</p>
+    </div>
+</div>
+<div class="row body align-items-center justify-content-center p-2" *ngFor="let t of tournaments; let i = index">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4">
         {{t.name}}
     </div>
-    <div class="col-3 text-center cell-align-center">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4 text-center">
         {{t.teams?.length}}
     </div>
-    <div class="col-3">
-        <a (click)="goToTournament(t.id)" class="btn btn-dark cell-align-center">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-4 text-center">
+        <a (click)="goToTournament(t.id)" class="btn btn-dark">
             Show
         </a>
     </div>
-    <div class="col-1"></div>
-
 </div>

@@ -1,12 +1,14 @@
-.row:nth-child(even)
+.body:nth-child(even)
 {
-    background: lightblue;
+    background: #d3d3d3;
 }
-.row:nth-child(odd)
+.body:nth-child(odd)
 {
-    background: lightcyan;
+    background: #c2c2c2 ;
 }
 
-.btn{
-    color:white;
+.header:nth-child(2)
+{
+    background: white !important;
+    border-top: 2px dashed black;
 }
