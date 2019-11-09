@@ -15,11 +15,14 @@ export class DashboardComponent implements OnInit {
   user: TournamentUser;
   constructor(public auth: AuthService, private crud: CrudService, public router: Router) { }
 
-  
+
   ngOnInit() {
 
     this.crud.getTournaments().subscribe(data => {
       this.tournaments = data.map(e => {
+
+        console.log(e.payload.doc.data());
+
         return {
           id: e.payload.doc.id,
           name: e.payload.doc.data()['name'],
@@ -30,7 +33,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goToTournament(tId) {
-    this.router.navigate(['/tournament'], { queryParams: { id:  tId} });
+    this.router.navigate(['/tournament'], { queryParams: { id: tId } });
   }
 
 }
