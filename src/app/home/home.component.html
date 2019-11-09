@@ -1,24 +1,21 @@
-<div class="row text-center">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-12 animated fadeIn">
-
-        <div class="row animated jackInTheBox">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <h1 class="text-center title-text">Welcome!</h1>
-                <h3 class="text-center mt-3">This is Foosball Manager</h3>
-                <p class="text-center">A web app where you can organize your personal foosball championship!</p>
-            </div>
+<main class="welcome">
+    <div class="content">
+        <div class="content__logo">
+            <img src="../../assets/foosball_logo.svg" class="img-fluid" alt="logo">
         </div>
-        <div class="row mt-5">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-1"></div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-10 justify-content-center">
-                <a (click)="auth.SigninWithGoogle()" class="btn btn-dark">
-                    Click here to start!
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-1"></div>
+
+        <div class="content__info">
+            <h3 class="welcome-text">Welcome on <br /> Foosball Manager!</h3>
+        </div>
+
+        <div class="content__buttons">
+            <button (click)="auth.SigninWithGoogle()" class="btn-login">
+                <img src="../../assets/icons/google.svg" class="icon img-fluid">
+                Join with Google
+            </button>
         </div>
 
     </div>
-</div>
+</main>
 
 <app-footer></app-footer>
