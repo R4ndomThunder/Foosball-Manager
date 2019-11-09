@@ -20,15 +20,13 @@ export class DashboardComponent implements OnInit {
 
     this.crud.getTournaments().subscribe(data => {
       this.tournaments = data.map(e => {
-
-        console.log(e.payload.doc.data());
-
         return {
           id: e.payload.doc.id,
           name: e.payload.doc.data()['name'],
-          teams: e.payload.doc.data()['teams'],
-        }
-      })
+          teams: e.payload.doc.data()['teams'].length,
+          type: e.payload.doc.data()['type'],
+        };
+      });
     });
   }
 
