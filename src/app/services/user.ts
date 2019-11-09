@@ -8,7 +8,7 @@ export class TournamentUser {
       user = {
         name: name,
         uid: uid,
-        role: role        
+        role: role
       };
     }
     Object.assign(this, user);
