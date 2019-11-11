@@ -70,7 +70,7 @@ export class TournamentManagerComponent implements OnInit {
 
   closeTournament() {
     //Remove tournament
-    let snack = this._snackBar.showWithAction("⚠ Are you sure to close this tournament?","Yes!");
+    let snack = this._snackBar.showWithAction("⚠ Are you sure to close this tournament?","✔");
     snack.onAction().subscribe(() =>{
       this.crud.removeTournament(this.tournament);
     });

@@ -1,10 +1,17 @@
-{{team1.name}}
-{{strTeam1.name}}
-{{dfsTeam1.name}}
-{{team2.name}}
-{{strTeam2.name}}
-{{dfsTeam2.name}}
-
-<a (click)="stopMatch()" class="btn-danger btn">
-    Stop Match
-</a>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-1"></div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+        <h3 class="text-center">{{team1.name}} <strong> VS </strong> {{team2.name}}</h3>
+        <h3 class="text-center">{{match.blueScore}} <strong> - </strong> {{match.redScore}}</h3>
+        <a (click)="stopMatch()" class="btn-danger btn justify-content-center">
+            Stop Match
+        </a>
+        <!-- <p>{{team1.name}}</p> -->
+        <p>{{strTeam1.name}}</p>
+        <p>{{dfsTeam1.name}}</p>
+        <!-- <p>{{team2.name}}</p> -->
+        <p>{{strTeam2.name}}</p>
+        <p>{{dfsTeam2.name}}</p>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-1"></div>
+</div>

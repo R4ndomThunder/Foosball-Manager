@@ -83,7 +83,6 @@ export class MatchmakerComponent implements OnInit {
       }).catch(error => {
         this._snackBar.show('⚠️ Error: ' + error);
       });
-      console.log()
       this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id }});
     }
     else{

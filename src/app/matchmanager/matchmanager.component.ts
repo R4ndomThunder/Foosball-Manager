@@ -23,6 +23,8 @@ export class MatchmanagerComponent implements OnInit {
 
   team1: Team;
   team2: Team;
+  team1Score : number = 0;
+  team2Score: number = 0;
 
   strTeam1: TournamentUser;
   strTeam2: TournamentUser;
@@ -59,15 +61,16 @@ export class MatchmanagerComponent implements OnInit {
 
         this.team1 = this.tournament.teams.find(t => t.id == this.match.blueTeamId)
 
-
         this.dfsTeam1 = this.tournament.users.find(u => u.uid == this.team1.defenderId)
         this.strTeam1 = this.tournament.users.find(u => u.uid == this.team1.strikerId)
 
+        console.log(this.team1);
+        
         this.team2 = this.tournament.teams.find(t => t.id == this.match.redTeamId)
-
-
+        
         this.dfsTeam2 = this.tournament.users.find(u => u.uid == this.team2.defenderId)
         this.strTeam2 = this.tournament.users.find(u => u.uid == this.team2.strikerId)
+        console.log(this.team2);
       }
       else {
         this.router.navigate(['/404']);
@@ -76,7 +79,7 @@ export class MatchmanagerComponent implements OnInit {
   }
 
   addScore(player, team) {
-
+    
   }
 
   stopMatch() {

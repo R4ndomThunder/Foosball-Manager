@@ -32,7 +32,6 @@ export class ProfileComponent implements OnInit {
       });
 
     this.crud.getPlayerData(this.userId).subscribe(data => {
-      console.log(data);
       if (data.payload.exists) {
         let uData: extraUserData = {
           gf: data.payload.data()["gf"],
