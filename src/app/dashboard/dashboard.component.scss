@@ -1,14 +1,65 @@
-.body:nth-child(even)
-{
-    background: #d3d3d3;
-}
-.body:nth-child(odd)
-{
-    background: #c2c2c2 ;
-}
+@import "../../variable.scss";
 
-.header:nth-child(2)
-{
-    background: white !important;
-    border-top: 2px dashed black;
+.dashboard {
+  .content {
+    height: 85vh;
+    &__top-box {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 50px;
+      border-bottom: 2px solid $borderGrey;
+
+      h3 {
+        font-family: $roboto;
+      }
+    }
+
+    &__list-tournaments {
+      .table {
+        background-color: white;
+        &__header {
+          border-bottom: 2px solid;
+          .head-col {
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid black;
+            justify-content: center;
+            color: $blue;
+            &:last-child {
+              border-right: 0;
+            }
+          }
+        }
+        &__content {
+          overflow: auto;
+          max-height: 70vh;
+          .single-row {
+            display: flex;
+            align-items: center;
+            &:nth-child(odd) {
+              background-color: rgba(128, 128, 128, 0.09);
+            }
+            .data-col {
+              word-break: break-all;
+              &:first-child {
+                text-align: center;
+                img {
+                  max-width: 90px;
+                }
+              }
+              &:nth-child(2) {
+                span {
+                  cursor: pointer;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

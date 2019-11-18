@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   user: TournamentUser;
   constructor(public auth: AuthService, private crud: CrudService, public router: Router) { }
 
-  
+
   ngOnInit() {
 
     this.crud.getTournaments().subscribe(data => {
@@ -23,14 +23,15 @@ export class DashboardComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           name: e.payload.doc.data()['name'],
-          teams: e.payload.doc.data()['teams'],
-        }
-      })
+          teams: e.payload.doc.data()['teams'].length,
+          type: e.payload.doc.data()['type'],
+        };
+      });
     });
   }
 
   goToTournament(tId) {
-    this.router.navigate(['/tournament'], { queryParams: { id:  tId} });
+    this.router.navigate(['/tournament'], { queryParams: { id: tId } });
   }
 
 }
