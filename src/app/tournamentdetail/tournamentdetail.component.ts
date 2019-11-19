@@ -8,6 +8,7 @@ import { TournamentUser } from '../services/user';
 import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
 import { Match } from '../services/matches';
 import { SnackbarService } from '../snackbar.service';
+import { Bracket, Round } from '../services/brackets';
 
 @Component({
   selector: 'app-tournamentdetail',
@@ -22,8 +23,9 @@ export class TournamentdetailComponent implements OnInit {
   playerRole: string;
   roleForm: FormGroup;
   match: Match;
-
   matches: any;
+
+  brackets: Bracket;
 
   dataSource = this.tournament;
   expandedElement: Tournament | null;
@@ -59,6 +61,11 @@ export class TournamentdetailComponent implements OnInit {
           element.blueTeam = this.tournament.teams.find(t => t.id == element.blueTeamId);
           element.redTeam = this.tournament.teams.find(t => t.id == element.redTeamId);
         });
+
+        var rounds: Round[];
+        this.brackets = {
+          rounds: rounds,
+        }
       }
       else {
         this.router.navigate(['/404']);
@@ -142,7 +149,34 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   createBrackets() {
+    //TODO
+    var match: Match = {
+      id: "",
+      date: Date.now().toString(),
+      blueScore: 0,
+      redScore: 0,
+      blueTeamId: "Team1",
+      redTeamId: "Team2",
+      finished: false,
+    }
+    
+    var matches = [];
+    for (let index = 0; index < 8; index++) {
+      matches.push(match);
+    }
+    console.log(matches);
 
+    var rounds = [];
+    var round: Round = {
+      matches: [match, match, match, match]
+    };
+    for (let index = 0; index < 2; index++) {
+      rounds.push(round);
+    }
+    console.log(rounds);
+
+    this.brackets.rounds = rounds;
+    console.log(this.brackets);
   }
 
   createTeams() {
@@ -158,7 +192,7 @@ export class TournamentdetailComponent implements OnInit {
               if (anys.length > 0) {
                 anys[0].role = "Striker";
                 strikers.push(anys[0]);
-                anys.splice(0,1);
+                anys.splice(0, 1);
               }
             }
           }
@@ -167,7 +201,7 @@ export class TournamentdetailComponent implements OnInit {
               if (anys.length > 0) {
                 anys[0].role = "Defender";
                 defenders.push(anys[0]);
-                anys.splice(0,1);
+                anys.splice(0, 1);
               }
             }
           }
@@ -213,8 +247,12 @@ export class TournamentdetailComponent implements OnInit {
     }
   }
 
-  getUserName(id)
-  {
+  getUserName(id) {
     return this.tournament.users.find(u => u.uid == id).name;
+  }
+
+  getTeamName(id) {
+    console.log(id);
+    return this.tournament.teams.find(t => t.id == id).name;
   }
 }

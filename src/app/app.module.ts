@@ -34,7 +34,6 @@ import { TournamentdetailComponent } from './tournamentdetail/tournamentdetail.c
 import { MatchmakerComponent } from './matchmaker/matchmaker.component';
 import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
 import { TournamentManagerComponent } from './tournament-manager/tournament-manager.component';
-import { BracketsComponent } from './brackets/brackets.component';
 import { TeammanagerComponent } from './teammanager/teammanager.component';
 import { MessagingService } from './messaging.service';
 import { AngularFireMessagingModule, AngularFireMessaging } from '@angular/fire/messaging';
@@ -57,7 +56,6 @@ import { AsyncPipe } from '@angular/common';
     MatchmakerComponent,
     MatchmanagerComponent,
     TournamentManagerComponent,
-    BracketsComponent,
     TeammanagerComponent
   ],
   imports: [

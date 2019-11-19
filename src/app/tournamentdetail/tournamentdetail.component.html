@@ -12,12 +12,12 @@
             <a class="btn-dark btn m-3" style="color:white;" (click)="manageTournament()">
                 Manage Tournament
             </a>
-            <a class="btn btn-dark m-3" style="color:white;" *ngIf="tournament.type == 'Championship'  && tournament.teams.length == 0"
-                (click)="createTeams()">
+            <a class="btn btn-dark m-3" style="color:white;"
+                *ngIf="tournament.type == 'Championship'  && tournament.teams.length == 0" (click)="createTeams()">
                 Generate Teams
             </a>
-            <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0" class="btn btn-dark m-3" style="color:white;"
-                (click)="createBrackets()">
+            <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0" class="btn btn-dark m-3"
+                style="color:white;" (click)="createBrackets()">
                 Generate Brackets
             </a>
         </div>
@@ -91,23 +91,22 @@
 
             </div>
         </div>
-
     </div>
+
     <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
-
-            <div class="flex-cell cell-3 cell-align-center">
-                <h3 class="text-center">Teams</h3>
-                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
-                    Name | Striker | Defender
-                </div>
-                <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
-                    {{t.name}} | {{getUserName(t.strikerId)}} | {{getUserName(t.defenderId)}}                   
-                    <a (click)="editTeam(t)" class="btn btn-dark"
-                        *ngIf="inThisTeam(t)">Edit</a>
-                </div>
+        <div class="flex-cell cell-1 cell-align-center">
+            <h3 class="text-center">Teams</h3>
+            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
+                Name | Striker | Defender
             </div>
+            <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
+                {{t.name}} | {{getUserName(t.strikerId)}} | {{getUserName(t.defenderId)}}
+                <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t)">Edit</a>
+            </div>
+        </div>
+    </div>
 
-    <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
+    <div class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
         <h3 class="text-center">Players</h3>
         <div class="row justify-content-center">
             Name | Role
@@ -116,6 +115,23 @@
             {{p.name}} | {{p.role}}
         </div>
     </div>
-    <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
-        <app-brackets></app-brackets>
+    <div *ngIf="tournament.type == 'Championship'" class="flex-cell cell-1 cell-align-center">
+        <div class="row justify-content-center">
+            <h3 class="text-center">== Brackets ==</h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="tournament">
+                <div *ngFor="let r of brackets.rounds;  let i = index">
+                    <div *ngFor="let m of r.matches;  let i = index">
+                        <ul>
+                            <li>{{getTeamName(m.blueTeamId)}}</li>
+                            <li>{{getTeamName(m.redTeamId)}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- <ul *ngFor="let t of tournament.teams; let i = index">
+                <span>{{t.name}}</span>
+            </ul> -->
+        </div>
     </div>
