@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth-service.service';
 import { Router } from '@angular/router';
 import { CrudService } from '../crud.service';
+import { MessagingService } from '../messaging.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +11,9 @@ import { CrudService } from '../crud.service';
 })
 export class NavbarComponent implements OnInit {
 
+  message : any;
   version: any;
-  constructor(public auth: AuthService, public router: Router, public crud: CrudService) { }
+  constructor(public auth: AuthService,public messages:MessagingService, public router: Router, public crud: CrudService) { }
 
   ngOnInit() {
     this.crud.getAppData().subscribe(data => {

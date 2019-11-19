@@ -28,7 +28,7 @@
                     <div class="table__content">
                         <div class="single-row row m-0" *ngFor="let t of tournaments">
                             <div class="data-col col">
-                                <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" alt="type">
+                                <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" [alt]="t.type">
                             </div>
                             <div class="data-col col">
                                 <span (click)="goToTournament(t.id)">{{t.name}}</span>

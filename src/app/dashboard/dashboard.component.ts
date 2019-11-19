@@ -3,6 +3,7 @@ import { CrudService } from '../crud.service';
 import { AuthService } from '../auth-service.service';
 import { TournamentUser } from '../services/user';
 import { Router } from '@angular/router';
+import { MessagingService } from '../messaging.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,6 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.crud.getTournaments().subscribe(data => {
       this.tournaments = data.map(e => {
         return {
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
           type: e.payload.doc.data()['type'],
         };
       });
-    });
+    });    
   }
 
   goToTournament(tId) {

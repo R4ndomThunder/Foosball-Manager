@@ -1,8 +1,8 @@
 {
   "name": "Foosball Manager",
   "short_name": "Foosball Manager",
-  "theme_color": "#343a40",
-  "background_color": "#343a40",
+  "theme_color": "#19712d",
+  "background_color": "#19712d",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

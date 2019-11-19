@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ɵConsole } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../crud.service';
 import { Team } from '../services/team';
@@ -145,8 +145,76 @@ export class TournamentdetailComponent implements OnInit {
 
   }
 
-  createTeams()
-  {
+  createTeams() {
+    var defenders = this.tournament.users.filter(u => u.role == "Defender");
+    var strikers = this.tournament.users.filter(u => u.role == "Striker");
+    var anys = this.tournament.users.filter(u => u.role == "Any");
 
+    if (defenders.length > 0 && strikers.length > 0) {
+      if (defenders.length != strikers.length) {
+        if (anys.length > 0) {
+          if (defenders.length > strikers.length) {
+            for (let i = 0; i < defenders.length - strikers.length; i++) {
+              if (anys.length > 0) {
+                anys[0].role = "Striker";
+                strikers.push(anys[0]);
+                anys.splice(0,1);
+              }
+            }
+          }
+          else if (defenders.length < strikers.length) {
+            for (let i = 0; i < strikers.length - defenders.length; i++) {
+              if (anys.length > 0) {
+                anys[0].role = "Defender";
+                defenders.push(anys[0]);
+                anys.splice(0,1);
+              }
+            }
+          }
+        }
+        else
+          this._snackBar.show("If defenders and strikers number is not the same you need some 'Any' players to fill missing positions");
+      }
+      if (defenders.length == strikers.length) {
+        console.log("Generating...");
+        var count = 0;
+        this.tournament.teams = [];
+        do {
+          count++;
+          var dIndex = Math.floor((Math.random() * defenders.length));
+          var sIndex = Math.floor((Math.random() * strikers.length))
+
+          var defenderId = defenders[dIndex].uid;
+          var strikerId = strikers[sIndex].uid;
+
+          var team: Team = {
+            defenderId: defenderId,
+            strikerId: strikerId,
+            goalFatti: 0,
+            goalSubiti: 0,
+            lost: 0,
+            played: 0,
+            name: "Team" + count,
+            score: 0,
+            win: 0,
+            id: "Team" + count
+          };
+
+          defenders.splice(dIndex, 1);
+          strikers.splice(sIndex, 1);
+
+          this.tournament.teams.push(team);
+          console.log(team);
+        }
+        while (defenders.length > 0);
+        console.log(this.tournament);
+        this.crud.addInfoToTournament(this.tournament);
+      }
+    }
+  }
+
+  getUserName(id)
+  {
+    return this.tournament.users.find(u => u.uid == id).name;
   }
 }

@@ -5,6 +5,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
 import { AuthService } from './auth-service.service';
+import { MessagingService } from './messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
 

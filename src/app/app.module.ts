@@ -36,6 +36,9 @@ import { MatchmanagerComponent } from './matchmanager/matchmanager.component';
 import { TournamentManagerComponent } from './tournament-manager/tournament-manager.component';
 import { BracketsComponent } from './brackets/brackets.component';
 import { TeammanagerComponent } from './teammanager/teammanager.component';
+import { MessagingService } from './messaging.service';
+import { AngularFireMessagingModule, AngularFireMessaging } from '@angular/fire/messaging';
+import { AsyncPipe } from '@angular/common';
 
 
 @NgModule({
@@ -61,21 +64,22 @@ import { TeammanagerComponent } from './teammanager/teammanager.component';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    AngularFireMessagingModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
     FormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/firebase-messaging-sw.js', { enabled: environment.production }),
     NoopAnimationsModule,
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
     MatTableModule, 
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [AuthService],
+  providers: [AuthService, MessagingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,11 +7,15 @@
             Stop Match
         </a>
         <!-- <p>{{team1.name}}</p> -->
-        <p>{{strTeam1.name}}</p>
-        <p>{{dfsTeam1.name}}</p>
+        <p>{{strTeam1.name}}</p> <a (click)="addGoal(strTeam1, team1)" class="btn btn-dark">➕</a> <a (click)="removeGoal(strTeam1,team1)"
+            class="btn btn-danger">➖</a>
+        <p>{{dfsTeam1.name}}</p><a (click)="addGoal(dfsTeam1, team1)" class="btn btn-dark">➕</a> <a (click)="removeGoal(dfsTeam1, team1)"
+            class="btn btn-danger">➖</a>
         <!-- <p>{{team2.name}}</p> -->
-        <p>{{strTeam2.name}}</p>
-        <p>{{dfsTeam2.name}}</p>
+        <p>{{strTeam2.name}}</p><a (click)="addGoal(strTeam2, team2)" class="btn btn-dark">➕</a> <a (click)="removeGoal(strTeam2, team2)"
+            class="btn btn-danger">➖</a>
+        <p>{{dfsTeam2.name}}</p><a (click)="addGoal(dfsTeam2, team2)" class="btn btn-dark">➕</a> <a (click)="removeGoal(dfsTeam2, team2)"
+            class="btn btn-danger">➖</a>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4 col-1"></div>
 </div>

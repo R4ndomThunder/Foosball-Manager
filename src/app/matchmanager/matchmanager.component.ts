@@ -8,6 +8,7 @@ import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { SnackbarService } from '../snackbar.service';
 import { TournamentUser } from '../services/user';
+import { extraUserData } from '../services/extraUserData';
 
 @Component({
   selector: 'app-matchmanager',
@@ -23,7 +24,7 @@ export class MatchmanagerComponent implements OnInit {
 
   team1: Team;
   team2: Team;
-  team1Score : number = 0;
+  team1Score: number = 0;
   team2Score: number = 0;
 
   strTeam1: TournamentUser;
@@ -65,9 +66,9 @@ export class MatchmanagerComponent implements OnInit {
         this.strTeam1 = this.tournament.users.find(u => u.uid == this.team1.strikerId)
 
         console.log(this.team1);
-        
+
         this.team2 = this.tournament.teams.find(t => t.id == this.match.redTeamId)
-        
+
         this.dfsTeam2 = this.tournament.users.find(u => u.uid == this.team2.defenderId)
         this.strTeam2 = this.tournament.users.find(u => u.uid == this.team2.strikerId)
         console.log(this.team2);
@@ -78,8 +79,46 @@ export class MatchmanagerComponent implements OnInit {
     });
   }
 
-  addScore(player, team) {
-    
+  addGoal(player: TournamentUser, team: Team) {
+    console.log("Add 1 point for: " + team);
+    var t1 = this.tournament.teams.find(t => t.id == this.match.blueTeamId);
+    var t2 = this.tournament.teams.find(t => t.id == this.match.redTeamId);
+
+    if (team.id == t1.id) {
+      team.goalFatti++;
+      t2.goalSubiti++;
+      this.tournament.matches.find(m => m.id == this.match.id).blueScore++;
+      this.crud.addInfoToTournament(this.tournament);
+    }
+    else if (team.id == t2.id) {
+      team.goalFatti++;
+      t1.goalSubiti++;
+      this.tournament.matches.find(m => m.id == this.match.id).redScore++;
+      this.crud.addInfoToTournament(this.tournament);
+    }
+    // player.++;
+    this.crud.addInfoToTournament(this.tournament);
+  }
+
+  removeGoal(player: TournamentUser, team: Team) {
+    var t1 = this.tournament.teams.find(t => t.id == this.match.blueTeamId);
+    var t2 = this.tournament.teams.find(t => t.id == this.match.redTeamId);
+
+    if (team.id == t1.id && this.match.blueScore > 0) {
+      team.goalFatti--;
+      t2.goalSubiti--;
+      this.tournament.matches.find(m => m.id == this.match.id).blueScore--;
+      this.crud.addInfoToTournament(this.tournament);
+    }
+    else if (team.id == t2.id) {
+      team.goalFatti++;
+      t1.goalSubiti++;
+      this.tournament.matches.find(m => m.id == this.match.id).redScore++;
+      this.crud.addInfoToTournament(this.tournament);
+    }
+
+    // player.gf--;
+    this.crud.setPlayerData(this.auth.userData.uid, player);
   }
 
   stopMatch() {
@@ -88,6 +127,24 @@ export class MatchmanagerComponent implements OnInit {
       this.tournament.matches.forEach(element => {
         if (element.id == this.matchId) {
           element.finished = true;
+          var t1 = this.tournament.teams.find(t => t.id == this.match.blueTeamId);
+          var t2 = this.tournament.teams.find(t => t.id == this.match.redTeamId);
+          t1.played++;
+          t2.played++;
+          if (this.match.blueScore > this.match.redScore) {
+            t1.win++;
+            t1.score += 3;
+            t2.lost++;
+          }
+          else if (this.match.blueScore < this.match.redScore) {
+            t2.win++;
+            t2.score += 3;
+            t1.lost++;
+          }
+          else{
+            t1.score++;
+            t2.score++;
+          }
         }
       });
 

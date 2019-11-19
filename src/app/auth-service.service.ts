@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material';
 import { CrudService } from './crud.service';
 import { extraUserData } from './services/extraUserData';
 import { SnackbarService } from './snackbar.service';
+import { MessagingService } from './messaging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ import { SnackbarService } from './snackbar.service';
 export class AuthService {
   userData: any; // Save logged in user data
   extraData: extraUserData;
-
+  message : any;
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -24,23 +25,19 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     public snackBar: SnackbarService,
-    public crud: CrudService
+    public crud: CrudService,
+    public messages: MessagingService
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.userData = user;
-        
-        // localStorage.setItem('extraData', JSON.stringify(this.extraData));
+        this.userData = user;        
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
-        // JSON.parse(localStorage.getItem('extraData'));
       } else {
         localStorage.setItem('user', null);
-        // localStorage.setItem('extraData', null);
         JSON.parse(localStorage.getItem('user'));
-        // JSON.parse(localStorage.getItem('extraData'));
       }
     })
   }
@@ -70,6 +67,11 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
+    
+    this.messages.requestPermission(user.uid);
+    this.messages.receiveMessage();
+    this.message = this.messages.currentMessage;    
+
     return (user !== null && user.emailVerified !== false) ? true : false;
   }
 
