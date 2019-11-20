@@ -1,137 +1,141 @@
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <h2 class="text-center">- {{tournament.name}} -</h2>
-    </div>
+<div *ngIf="tournament == null">
+    <loading></loading>
 </div>
-
-<div class="row">
-    <div class="col-lg-4 col-md-4 justify-content-center"></div>
-    <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
-        <!-- Admin buttons -->
-        <div *ngIf="isAdmin === true && isSigned === true">
-            <a class="btn-dark btn m-3" style="color:white;" (click)="manageTournament()">
-                Manage Tournament
-            </a>
-            <a class="btn btn-dark m-3" style="color:white;"
-                *ngIf="tournament.type == 'Championship'  && tournament.teams.length == 0" (click)="createTeams()">
-                Generate Teams
-            </a>
-            <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0 && tournament.brackets == null" class="btn btn-dark m-3"
-                style="color:white;" (click)="createBrackets()">
-                Generate Brackets
-            </a>
+<div *ngIf="tournament != null">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h2 class="text-center">- {{tournament.name}} -</h2>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 justify-content-center"></div>
-</div>
 
-<div class="row">
-    <div class="col-lg-4 col-md-4 justify-content-center"></div>
-    <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
-        <!-- User buttons -->
-        <div *ngIf="tournament.type == 'League'">
-            <a *ngIf="isSigned === true" class="btn btn-dark m-3"
-                (click)="createNewTeam(id)">
-                New team
-            </a>
-            <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="createNewMatch(id)">
-                New match
-            </a>
-        </div>
-
-        <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="Unsubscibe()">
-            Unsubscibe
-        </a>
-
-        <form [formGroup]="roleForm">
-            <select *ngIf="isSigned === false" class="form-control" formControlName="PlayerRole"
-                [(ngModel)]="playerRole">
-                <option>Any</option>
-                <option>Striker</option>
-                <option>Defender</option>
-            </select>
-            <a *ngIf="isSigned === false" class="btn btn-dark m-3" (click)="subscribe()">
-                Subscribe
-            </a>
-        </form>
-    </div>
-    <div class="col-lg-4 col-md-4 justify-content-center"></div>
-</div>
-
-<div class="row">
-    <div *ngIf="tournament.type == 'League'" class="h-flex-container container-align-center">
-
-        <div class="flex-cell cell-3 cell-align-center">
-            <h3 class="text-center">Teams</h3>
-            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
-                Name | Score | Win | Lost | Played | GF | GS
-            </div>
-            <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
-                {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}}
-                <a (click)="editTeam(t)" class="btn btn-dark"
-                    *ngIf="inThisTeam(t)">Edit</a>
-            </div>
-        </div>
-
-        <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
-            <h3 class="text-center">Matches</h3>
-            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center">
-                [Team1] ScoreT1 - ScoreT2 [Team2] (Date)
-            </div>
-            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center"
-                *ngFor="let m of matches; let i = index">
-                [{{m.blueTeam.name}}]
-                {{m.blueScore}} -
-                {{m.redScore}}
-                [{{m.redTeam.name}}]
-                ({{m.date | date: 'dd MMM yyyy'}})
-                <a class="btn btn-dark" *ngIf="m.finished == false" (click)="showMatch(m.id)">
-                    Show
+    <div class="row">
+        <div class="col-lg-4 col-md-4 justify-content-center"></div>
+        <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
+            <!-- Admin buttons -->
+            <div *ngIf="isAdmin === true && isSigned === true">
+                <a class="btn-dark btn m-3" style="color:white;" (click)="manageTournament()">
+                    Manage Tournament
                 </a>
-
+                <a class="btn btn-dark m-3" style="color:white;"
+                    *ngIf="tournament.type == 'Championship'  && tournament.teams.length == 0" (click)="createTeams()">
+                    Generate Teams
+                </a>
+                <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0 && tournament.brackets == null"
+                    class="btn btn-dark m-3" style="color:white;" (click)="createBrackets()">
+                    Generate Brackets
+                </a>
             </div>
         </div>
+        <div class="col-lg-4 col-md-4 justify-content-center"></div>
     </div>
 
-    <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
-        <div class="flex-cell cell-1 cell-align-center">
-            <h3 class="text-center">Teams</h3>
-            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
-                Name | Striker | Defender
+    <div class="row">
+        <div class="col-lg-4 col-md-4 justify-content-center"></div>
+        <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
+            <!-- User buttons -->
+            <div *ngIf="tournament.type == 'League'">
+                <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="createNewTeam(id)">
+                    New team
+                </a>
+                <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="createNewMatch(id)">
+                    New match
+                </a>
             </div>
-            <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
-                {{t.name}} | {{getUserName(t.strikerId)}} | {{getUserName(t.defenderId)}}
-                <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t)">Edit</a>
-            </div>
+
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="Unsubscibe()">
+                Unsubscibe
+            </a>
+
+            <form [formGroup]="roleForm">
+                <select *ngIf="isSigned === false" class="form-control" formControlName="PlayerRole"
+                    [(ngModel)]="playerRole">
+                    <option>Any</option>
+                    <option>Striker</option>
+                    <option>Defender</option>
+                </select>
+                <a *ngIf="isSigned === false" class="btn btn-dark m-3" (click)="subscribe()">
+                    Subscribe
+                </a>
+            </form>
         </div>
+        <div class="col-lg-4 col-md-4 justify-content-center"></div>
     </div>
 
-    <div class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
-        <h3 class="text-center">Players</h3>
-        <div class="row justify-content-center">
-            Name | Role
-        </div>
-        <div class="row justify-content-center" *ngFor="let p of tournament.users; let i = index">
-            {{p.name}} | {{p.role}}
-        </div>
-    </div>
-    <div *ngIf="tournament.type == 'Championship'" class="flex-cell cell-1 cell-align-center">
-        <div class="row justify-content-center">
-            <h3 class="text-center">== Brackets ==</h3>
-        </div>
-        <div class="row justify-content-center">
-            <div class="tournament">
-                <div *ngFor="let r of brackets.rounds;  let i = index">
-                    <div *ngFor="let m of r.matches;  let i = index">
-                        <ul>
-                            <li>{{getTeamName(m.blueTeamId)}}</li>
-                            <li>{{getTeamName(m.redTeamId)}}</li>
-                        </ul>
-                    </div>
+    <div class="row">
+        <div *ngIf="tournament.type == 'League'" class="h-flex-container container-align-center">
+
+            <div class="flex-cell cell-3 cell-align-center">
+                <h3 class="text-center">Teams</h3>
+                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
+                    Name | Score | Win | Lost | Played | GF | GS
+                </div>
+                <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
+                    {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} |
+                    {{t.goalSubiti}}
+                    <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t)">Edit</a>
                 </div>
             </div>
-            <!-- <ul *ngFor="let t of tournament.teams; let i = index">
-                <span>{{t.name}}</span>
-            </ul> -->
+
+            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
+                <h3 class="text-center">Matches</h3>
+                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center">
+                    [Team1] ScoreT1 - ScoreT2 [Team2] (Date)
+                </div>
+                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center"
+                    *ngFor="let m of matches; let i = index">
+                    [{{m.blueTeam.name}}]
+                    {{m.blueScore}} -
+                    {{m.redScore}}
+                    [{{m.redTeam.name}}]
+                    ({{m.date | date: 'dd MMM yyyy'}})
+                    <a class="btn btn-dark" *ngIf="m.finished == false" (click)="showMatch(m.id)">
+                        Show
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
+            <div class="flex-cell cell-1 cell-align-center">
+                <h3 class="text-center">Teams</h3>
+                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
+                    Name | Striker | Defender
+                </div>
+                <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
+                    {{t.name}} | {{getUserName(t.strikerId)}} | {{getUserName(t.defenderId)}}
+                    <a (click)="editTeam(t)" class="btn btn-dark" *ngIf="inThisTeam(t)">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
+            <h3 class="text-center">Players</h3>
+            <div class="row justify-content-center">
+                Name | Role
+            </div>
+            <div class="row justify-content-center" *ngFor="let p of tournament.users; let i = index">
+                {{p.name}} | {{p.role}}
+            </div>
+        </div>
+        <div *ngIf="tournament.type == 'Championship'" class="flex-cell cell-1 cell-align-center">
+            <div class="row justify-content-center">
+                <h3 class="text-center">== Brackets ==</h3>
+            </div>
+            <div class="row justify-content-center">
+                <div class="tournament">
+                    <div *ngFor="let r of brackets.rounds;  let i = index">
+                        <div *ngFor="let m of r.matches;  let i = index">
+                            <ul>
+                                <li>{{getTeamName(m.blueTeamId)}}</li>
+                                <li>{{getTeamName(m.redTeamId)}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- <ul *ngFor="let t of tournament.teams; let i = index">
+                    <span>{{t.name}}</span>
+                </ul> -->
+            </div>
         </div>
     </div>

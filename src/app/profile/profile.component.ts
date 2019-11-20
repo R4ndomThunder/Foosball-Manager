@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateInfo() {
-    if (this.extraUserData == undefined) {
+    if (this.extraUserData == null) {
       let uData: extraUserData = {
         gf: 0,
         gs: 0,

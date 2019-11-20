@@ -9,6 +9,7 @@ import { Team } from '../services/team';
 import { SnackbarService } from '../snackbar.service';
 import { TournamentUser } from '../services/user';
 import { extraUserData } from '../services/extraUserData';
+import { Bracket } from '../services/brackets';
 
 @Component({
   selector: 'app-matchmanager',
@@ -54,7 +55,11 @@ export class MatchmanagerComponent implements OnInit {
           brackets : data.payload.data()["brackets"]
         };
         this.tournament = new Tournament(f);
+        var brackets : Bracket = {
+          rounds: []
+        }
 
+        this.tournament.brackets = this.tournament.brackets == null ?  brackets : this.tournament.brackets;
         this.tournament.matches.forEach(element => {
           if (element.id == this.matchId)
             this.match = new Match(element);

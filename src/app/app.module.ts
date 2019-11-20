@@ -38,6 +38,7 @@ import { TeammanagerComponent } from './teammanager/teammanager.component';
 import { MessagingService } from './messaging.service';
 import { AngularFireMessagingModule, AngularFireMessaging } from '@angular/fire/messaging';
 import { AsyncPipe } from '@angular/common';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { AsyncPipe } from '@angular/common';
     MatchmakerComponent,
     MatchmanagerComponent,
     TournamentManagerComponent,
-    TeammanagerComponent
+    TeammanagerComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { SnackbarService } from '../snackbar.service';
+import { Bracket } from '../services/brackets';
 
 @Component({
   selector: 'app-tournament-manager',
@@ -50,6 +51,11 @@ export class TournamentManagerComponent implements OnInit {
         this.tournament = f;
         this.name = this.tournament.name;
         this.type = this.tournament.type;
+        var brackets : Bracket = {
+          rounds: []
+        }
+
+        this.tournament.brackets = this.tournament.brackets == null ?  brackets : this.tournament.brackets;
       }
       else {
         this.router.navigate(['/404']);

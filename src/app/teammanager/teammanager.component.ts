@@ -6,6 +6,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SnackbarService } from '../snackbar.service';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
+import { Bracket } from '../services/brackets';
 
 @Component({
   selector: 'app-teammanager',
@@ -52,6 +53,11 @@ export class TeammanagerComponent implements OnInit {
         this.team = this.tournament.teams.find(t => t.id == this.teamId);
         this.teamId = this.team.id;
         this.teamName = this.team.name;
+        var brackets : Bracket = {
+          rounds: []
+        }
+
+        this.tournament.brackets = this.tournament.brackets == null ?  brackets : this.tournament.brackets;
       }
       else {
         this.router.navigate(['/404']);

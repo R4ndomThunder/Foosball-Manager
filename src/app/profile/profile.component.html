@@ -11,22 +11,27 @@
         <div *ngIf="auth.userData as user">
             <h1>Hi <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h1>
             <p><strong>Email: {{user.email}}</strong></p>
-            <form [formGroup]="userForm">
-                <p><strong>Preferred role:</strong></p>
+            <div *ngIf="extraUserData != null">
+                <form [formGroup]="userForm">
+                    <p><strong>Preferred role:</strong></p>
                     <div class="form-row">
-                    <select formControlName="Role" [(ngModel)]="role">
-                        <option>Any</option>
-                        <option>Striker</option>
-                        <option>Defender</option>
-                    </select>
-                    <a (click)="updateInfo()" class="btn btn-dark text-light ml-3">Update</a>
-                </div>
-            </form>
-            <p><strong>Played: {{extraUserData.played}}</strong></p>
-            <p><strong>Win: {{extraUserData.win}}</strong></p>
-            <p><strong>Lost: {{extraUserData.lost}}</strong></p>
-            <p><strong>GF: {{extraUserData.gf}}</strong></p>
-            <p><strong>GS: {{extraUserData.gs}}</strong></p>
+                        <select formControlName="Role" [(ngModel)]="role">
+                            <option>Any</option>
+                            <option>Striker</option>
+                            <option>Defender</option>
+                        </select>
+                        <a (click)="updateInfo()" class="btn btn-dark text-light ml-3">Update</a>
+                    </div>
+                </form>
+                <p><strong>Played: {{extraUserData.played}}</strong></p>
+                <p><strong>Win: {{extraUserData.win}}</strong></p>
+                <p><strong>Lost: {{extraUserData.lost}}</strong></p>
+                <p><strong>GF: {{extraUserData.gf}}</strong></p>
+                <p><strong>GS: {{extraUserData.gs}}</strong></p>
+            </div>
+            <div *ngIf="extraUserData == null">
+                <loading></loading>
+            </div>
         </div>
     </div>
     <div class="col-lg-4 col-md-4"></div>

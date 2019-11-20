@@ -1,5 +1,5 @@
 <main class="dashboard">
-    <div class="content">
+    <div class="content" *ngIf="tournaments != null">
         <div class="content__top-box">
             <h3>Active Tournaments</h3>
         </div>
@@ -43,4 +43,7 @@
         </div>
     </div>
 
+    <div class="content" *ngIf="tournaments == null">
+        <loading></loading>
+    </div>
 </main>

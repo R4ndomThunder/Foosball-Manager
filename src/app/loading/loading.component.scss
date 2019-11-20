@@ -1,0 +1,15 @@
+.spinner-layer {
+    border-color: #CC0003;
+  }
+  
+  .spinner-container {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
