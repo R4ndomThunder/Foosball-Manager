@@ -168,7 +168,6 @@ export class TournamentdetailComponent implements OnInit {
       this._snackBar.show("Unable to make brackets");
       return;
     }
-
     var teams = Object.assign([], this.tournament.teams);
     var roundsNumber = this.SmallestDivisor(matchesNumber);
     for (let i = 0; i <= roundsNumber; i++) {

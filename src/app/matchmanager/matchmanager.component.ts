@@ -50,7 +50,8 @@ export class MatchmanagerComponent implements OnInit {
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"]
+          admin: data.payload.data()["admin"],
+          brackets : data.payload.data()["brackets"]
         };
         this.tournament = new Tournament(f);
 
