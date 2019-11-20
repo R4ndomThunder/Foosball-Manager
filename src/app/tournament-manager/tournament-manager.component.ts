@@ -44,13 +44,11 @@ export class TournamentManagerComponent implements OnInit {
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"],
-          randomizeTeams: data.payload.data()["randomizeTeams"]
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
         this.name = this.tournament.name;
         this.type = this.tournament.type;
-        this.randomize = this.tournament.randomizeTeams;
       }
       else {
         this.router.navigate(['/404']);
@@ -79,7 +77,6 @@ export class TournamentManagerComponent implements OnInit {
   updateTournament() {
     this.tournament.name = this.name;
     this.tournament.type = this.type;
-    this.tournament.randomizeTeams = this.randomize;
 
     this.crud.addInfoToTournament(this.tournament).then(resp => {
 

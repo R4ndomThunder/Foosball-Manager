@@ -48,8 +48,7 @@ export class MatchmakerComponent implements OnInit {
           matches: data.payload.data()["matches"],
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
-          admin: data.payload.data()["admin"],
-          randomizeTeams: data.payload.data()["randomizeTeams"]
+          admin: data.payload.data()["admin"]
         };
         this.tournament = f;
       }

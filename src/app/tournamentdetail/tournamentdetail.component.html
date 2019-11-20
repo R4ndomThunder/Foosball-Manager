@@ -16,7 +16,7 @@
                 *ngIf="tournament.type == 'Championship'  && tournament.teams.length == 0" (click)="createTeams()">
                 Generate Teams
             </a>
-            <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0" class="btn btn-dark m-3"
+            <a *ngIf="tournament.type == 'Championship' && tournament.teams.length > 0 && tournament.brackets == null" class="btn btn-dark m-3"
                 style="color:white;" (click)="createBrackets()">
                 Generate Brackets
             </a>
@@ -30,7 +30,7 @@
     <div class="col-lg-4 col-md-4 col-sm-12 justify-content-center">
         <!-- User buttons -->
         <div *ngIf="tournament.type == 'League'">
-            <a *ngIf="isSigned === true && teamRandomized() === false" class="btn btn-dark m-3"
+            <a *ngIf="isSigned === true" class="btn btn-dark m-3"
                 (click)="createNewTeam(id)">
                 New team
             </a>
@@ -69,7 +69,7 @@
             <div *ngFor="let t of tournament.teams; let i = index" class="text-center">
                 {{t.name}} | {{t.score}} | {{t.win}} | {{t.lost}} | {{t.played}} | {{t.goalFatti}} | {{t.goalSubiti}}
                 <a (click)="editTeam(t)" class="btn btn-dark"
-                    *ngIf="inThisTeam(t) && tournament.randomizeTeams === false">Edit</a>
+                    *ngIf="inThisTeam(t)">Edit</a>
             </div>
         </div>
 
