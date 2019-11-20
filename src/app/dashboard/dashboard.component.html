@@ -6,7 +6,7 @@
         <div class="content__list-tournaments">
             <div class="container">
                 <div class="table">
-                    <div class="table__header">
+                    <div class="table__header animated fadeIn">
                         <div class="row m-0">
                             <div class="head-col col">
                                 <span>
@@ -25,8 +25,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table__content">
-                        <div class="single-row row m-0" *ngFor="let t of tournaments">
+                    <div class="table__content animated bounceInUp">
+                        <div class="single-row row m-0 " *ngFor="let t of tournaments">
                             <div class="data-col col">
                                 <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" [alt]="t.type">
                             </div>
