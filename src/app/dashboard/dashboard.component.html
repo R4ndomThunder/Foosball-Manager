@@ -1,12 +1,12 @@
 <main class="dashboard">
-    <div class="content">
+    <div class="content" *ngIf="tournaments != null">
         <div class="content__top-box">
             <h3>Active Tournaments</h3>
         </div>
         <div class="content__list-tournaments">
             <div class="container">
                 <div class="table">
-                    <div class="table__header">
+                    <div class="table__header animated fadeIn">
                         <div class="row m-0">
                             <div class="head-col col">
                                 <span>
@@ -25,10 +25,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table__content">
-                        <div class="single-row row m-0" *ngFor="let t of tournaments">
+                    <div class="table__content animated bounceInUp">
+                        <div class="single-row row m-0 " *ngFor="let t of tournaments">
                             <div class="data-col col">
-                                <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" alt="type">
+                                <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" [alt]="t.type">
                             </div>
                             <div class="data-col col">
                                 <span (click)="goToTournament(t.id)">{{t.name}}</span>
@@ -43,4 +43,7 @@
         </div>
     </div>
 
+    <div class="content" *ngIf="tournaments == null">
+        <loading></loading>
+    </div>
 </main>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ɵConsole } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../crud.service';
 import { Team } from '../services/team';
@@ -8,6 +8,8 @@ import { TournamentUser } from '../services/user';
 import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
 import { Match } from '../services/matches';
 import { SnackbarService } from '../snackbar.service';
+import { Bracket, Round } from '../services/brackets';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-tournamentdetail',
@@ -22,8 +24,9 @@ export class TournamentdetailComponent implements OnInit {
   playerRole: string;
   roleForm: FormGroup;
   match: Match;
-
   matches: any;
+
+  brackets: Bracket;
 
   dataSource = this.tournament;
   expandedElement: Tournament | null;
@@ -51,7 +54,7 @@ export class TournamentdetailComponent implements OnInit {
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
           admin: data.payload.data()["admin"],
-          randomizeTeams: data.payload.data()["randomizeTeams"]
+          brackets: data.payload.data()["brackets"]
         };
         this.tournament = f;
         this.matches = this.tournament.matches;
@@ -59,6 +62,15 @@ export class TournamentdetailComponent implements OnInit {
           element.blueTeam = this.tournament.teams.find(t => t.id == element.blueTeamId);
           element.redTeam = this.tournament.teams.find(t => t.id == element.redTeamId);
         });
+
+        if (this.tournament.brackets == null) {
+          var rounds: Round[] = [];
+          this.brackets = {
+            rounds: rounds,
+          }
+        }
+        else
+          this.brackets = this.tournament.brackets;
       }
       else {
         this.router.navigate(['/404']);
@@ -125,9 +137,6 @@ export class TournamentdetailComponent implements OnInit {
 
   }
 
-  teamRandomized() {
-    return this.tournament.randomizeTeams
-  }
 
   editTeam(team) {
     this.router.navigate(['/teammanager'], { queryParams: { tournament: this.tournament.id, team: team.id } })
@@ -142,11 +151,163 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   createBrackets() {
+    var emptyMatch: Match = {
+      id: "",
+      date: formatDate(new Date(), "dd MMM yyyy", 'en'),
+      blueScore: 0,
+      redScore: 0,
+      blueTeamId: "",
+      redTeamId: "",
+      finished: true,
+    }
 
+    var matchesNumber = 0;
+    if (this.tournament.teams.length % 2 == 0)
+      matchesNumber = this.tournament.teams.length / 2;
+    else {
+      this._snackBar.show("Unable to make brackets");
+      return;
+    }
+    var teams = Object.assign([], this.tournament.teams);
+    var roundsNumber = this.SmallestDivisor(matchesNumber);
+    for (let i = 0; i <= roundsNumber; i++) {
+      var round: Round = {
+        matches: []
+      };
+      if (i == 0) {
+        for (let index = 0; index < matchesNumber; index++) {
+          var t1 = this.random(teams.length);
+          var t2 = this.random(teams.length, t1);
+
+          var newMatch : Match = {
+            blueTeamId: teams[t1].id,
+            redTeamId: teams[t2].id,
+            blueScore: 0,
+            redScore : 0,
+            finished: true,
+            date: formatDate(new Date(), "dd MMM yyyy", 'en'),
+            id: teams[t2].id+teams[t1].id+formatDate(new Date(), "ddMMyyyyHHmmss", 'en')
+          };
+
+          round.matches.push(newMatch);
+          teams.splice(t1, 1);
+          teams.splice(t2, 1);
+          }
+      }
+      else {
+        for (let index = 0; index < matchesNumber; index++) {
+          round.matches.push(emptyMatch);
+        }
+      }
+      this.brackets.rounds.push(round);
+      matchesNumber /= 2;
+    }
+
+    this.tournament.brackets = this.brackets;
+    this.crud.addInfoToTournament(this.tournament);
   }
 
-  createTeams()
-  {
+  createTeams() {
+    var defenders = this.tournament.users.filter(u => u.role == "Defender");
+    var strikers = this.tournament.users.filter(u => u.role == "Striker");
+    var anys = this.tournament.users.filter(u => u.role == "Any");
 
+    if (defenders.length > 0 && strikers.length > 0) {
+      if (defenders.length != strikers.length) {
+        if (anys.length > 0) {
+          if (defenders.length > strikers.length) {
+            for (let i = 0; i < defenders.length - strikers.length; i++) {
+              if (anys.length > 0) {
+                anys[0].role = "Striker";
+                strikers.push(anys[0]);
+                anys.splice(0, 1);
+              }
+            }
+          }
+          else if (defenders.length < strikers.length) {
+            for (let i = 0; i < strikers.length - defenders.length; i++) {
+              if (anys.length > 0) {
+                anys[0].role = "Defender";
+                defenders.push(anys[0]);
+                anys.splice(0, 1);
+              }
+            }
+          }
+        }
+        else
+          this._snackBar.show("If defenders and strikers number is not the same you need some 'Any' players to fill missing positions");
+      }
+      if (defenders.length == strikers.length) {
+        console.log("Generating...");
+        var count = 0;
+        this.tournament.teams = [];
+        do {
+          count++;
+          var dIndex = this.random(defenders.length);
+          var sIndex = this.random(strikers.length)
+
+          var defenderId = defenders[dIndex].uid;
+          var strikerId = strikers[sIndex].uid;
+
+          var team: Team = {
+            defenderId: defenderId,
+            strikerId: strikerId,
+            goalFatti: 0,
+            goalSubiti: 0,
+            lost: 0,
+            played: 0,
+            name: "Team" + count,
+            score: 0,
+            win: 0,
+            id: "Team" + count
+          };
+
+          defenders.splice(dIndex, 1);
+          strikers.splice(sIndex, 1);
+
+          this.tournament.teams.push(team);
+          console.log(team);
+        }
+        while (defenders.length > 0);
+        console.log(this.tournament);
+        this.crud.addInfoToTournament(this.tournament);
+      }
+    }
+  }
+
+  getUserName(id) {
+    var player = this.tournament.users.find(u => u.uid == id);
+    if (player != null)
+      return player.name;
+    else
+      return "N/A";
+  }
+
+  getTeamName(id) {
+    var team = this.tournament.teams.find(t => t.id == id);
+    if (team != null)
+      return team.name;
+    else
+      return "N/A";
+  }
+
+  public SmallestDivisor(n: number) {
+    for (let index = 1; index <= n; index++) {
+      if (n % index == 0)
+        return index;
+    }
+  }
+
+  random(max: number, d?: number) {
+    if (d != null) {
+      var x = 0;
+      do {
+        x = Math.floor((Math.random() * max));
+      }
+      while (x == d);
+      return x;
+    }
+    else
+      return Math.floor((Math.random() * max));
   }
 }

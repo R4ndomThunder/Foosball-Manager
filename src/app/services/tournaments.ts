@@ -1,19 +1,19 @@
 import { Team } from './team';
 import { Match } from './matches';
 import { TournamentUser } from './user';
-import { TournamentManagerComponent } from '../tournament-manager/tournament-manager.component';
+import { Bracket } from './brackets';
 
 export class Tournament {
     id: string;
     name: string;
     teams: Team[];
-    matches: Match[];
-    users: TournamentUser[];
+    matches?: Match[];
+    users?: TournamentUser[];
     type: string;
     admin: string;
-    randomizeTeams: boolean;
+    brackets?:Bracket;
 
-    constructor(tournament: Tournament, newObject?: boolean, name?: string, adminUID?: string, type?: string, randomizeTeams?:boolean) {
+    constructor(tournament: Tournament, newObject?: boolean, name?: string, adminUID?: string, type?: string) {
         if (newObject) {
             tournament = {
                 name: name,
@@ -22,8 +22,7 @@ export class Tournament {
                 teams: [],
                 users: [],
                 type: type,
-                admin: adminUID,
-                randomizeTeams: randomizeTeams,
+                admin: adminUID
             }
         }
         return tournament;

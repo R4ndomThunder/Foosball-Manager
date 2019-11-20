@@ -43,12 +43,16 @@ export class ProfileComponent implements OnInit {
         }
         this.extraUserData = uData;
       }
+      else
+      {
+        this.updateInfo();
+      }
       this.role = this.extraUserData.preferredRole;
     })
   }
 
   updateInfo() {
-    if (this.extraUserData == undefined) {
+    if (this.extraUserData == null) {
       let uData: extraUserData = {
         gf: 0,
         gs: 0,

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { SnackbarService } from '../snackbar.service';
+import { Bracket } from '../services/brackets';
 
 @Component({
   selector: 'app-tournament-manager',
@@ -45,12 +46,16 @@ export class TournamentManagerComponent implements OnInit {
           users: data.payload.data()["users"],
           type: data.payload.data()["type"],
           admin: data.payload.data()["admin"],
-          randomizeTeams: data.payload.data()["randomizeTeams"]
+          brackets : data.payload.data()["brackets"]
         };
         this.tournament = f;
         this.name = this.tournament.name;
         this.type = this.tournament.type;
-        this.randomize = this.tournament.randomizeTeams;
+        var brackets : Bracket = {
+          rounds: []
+        }
+
+        this.tournament.brackets = this.tournament.brackets == null ?  brackets : this.tournament.brackets;
       }
       else {
         this.router.navigate(['/404']);
@@ -79,7 +84,6 @@ export class TournamentManagerComponent implements OnInit {
   updateTournament() {
     this.tournament.name = this.name;
     this.tournament.type = this.type;
-    this.tournament.randomizeTeams = this.randomize;
 
     this.crud.addInfoToTournament(this.tournament).then(resp => {
 

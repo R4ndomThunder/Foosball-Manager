@@ -24,17 +24,24 @@
                     <label for="inputAddress">*Type:</label>
                     <select class="form-control" formControlName="Type" [(ngModel)]="type">
                         <option>Championship</option>
-                        <option>Tournament</option>
+                        <option>League</option>
                     </select>
                 </div>
             </div>
             <div class="form-row justify-content-center">
-                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <mat-slide-toggle (change)="setValue($event)" [checked]="randomize === true">
-                            Randomize Teams
-                        </mat-slide-toggle>
-                    </div>
-                </div>
+                <p> <b>Championship</b>:</p>
+                <ul>
+                    <li>Build teams</li>
+                    <li>Teams' Scoreboard</li>
+                    <li>Players' Scoreboard</li>
+                </ul>
+                <p><b>League</b>:</p>
+                <ul>
+                    <li>Random teams</li>
+                    <li>Brackets</li>
+                    <li>Random matches</li>
+                </ul>
+            </div>
             <div class="text-center mt-2 mb-5">
                 <button type="submit" class="btn btn-dark" [disabled]="tournamentForm.invalid"
                     (click)="createTournament()">Create</button>

@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { TournamentUser } from './services/user';
 import { extraUserData } from './services/extraUserData';
 import { Tournament } from './services/tournaments';
+import { AuthService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +39,6 @@ export class CrudService {
   removeTournament(tournament) {
     return this.firestore.collection("tournaments").doc(tournament.id).delete();
   }
+
+  
 }

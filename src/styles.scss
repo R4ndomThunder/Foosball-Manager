@@ -116,10 +116,11 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
 }
 
 .snack-style {
-  background-color: #20222f;
+  background-color: #19712d;
 }
 
 .cdk-overlay-container {
