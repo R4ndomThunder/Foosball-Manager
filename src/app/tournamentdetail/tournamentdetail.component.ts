@@ -170,7 +170,6 @@ export class TournamentdetailComponent implements OnInit {
     }
 
     var teams = Object.assign([], this.tournament.teams);
-    console.log(teams);
     var roundsNumber = this.SmallestDivisor(matchesNumber);
     for (let i = 0; i <= roundsNumber; i++) {
       var round: Round = {
@@ -180,9 +179,7 @@ export class TournamentdetailComponent implements OnInit {
         for (let index = 0; index < matchesNumber; index++) {
           var t1 = this.random(teams.length);
           var t2 = this.random(teams.length, t1);
-          console.log(t1);
-          console.log(t2);
-          
+
           var newMatch : Match = {
             blueTeamId: teams[t1].id,
             redTeamId: teams[t2].id,
@@ -196,8 +193,7 @@ export class TournamentdetailComponent implements OnInit {
           round.matches.push(newMatch);
           teams.splice(t1, 1);
           teams.splice(t2, 1);
-          console.log(teams);
-        }
+          }
       }
       else {
         for (let index = 0; index < matchesNumber; index++) {
@@ -209,9 +205,7 @@ export class TournamentdetailComponent implements OnInit {
     }
 
     this.tournament.brackets = this.brackets;
-    console.log(this.tournament);
     this.crud.addInfoToTournament(this.tournament);
-    console.log(this.brackets.rounds);
   }
 
   createTeams() {
