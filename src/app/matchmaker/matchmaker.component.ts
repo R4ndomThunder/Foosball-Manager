@@ -17,11 +17,16 @@ import { SnackbarService } from '../snackbar.service';
 })
 export class MatchmakerComponent implements OnInit {
   id: string;
+  add: string;
+
   tournament: Tournament;
   match: Match;
 
-  team1 : Team;
+  team1: Team;
   team2: Team;
+
+  blueScore: number;
+  redScore: number;
 
   matchForm: FormGroup;
   matchControl = new FormControl('', [Validators.required]);
@@ -30,6 +35,8 @@ export class MatchmakerComponent implements OnInit {
     this.matchForm = fb.group({
       blueTeam: ['', Validators.required],
       redTeam: ['', Validators.required],
+      redS: [0, Validators.required],
+      blueS: [0, Validators.required],
     })
   }
 
@@ -37,11 +44,12 @@ export class MatchmakerComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         this.id = params.id;
+        this.add = params.add;
       });
 
     this.crud.getTournamentDetail(this.id).subscribe(data => {
       if (data.payload.exists) {
-        let f : Tournament = {
+        let f: Tournament = {
           id: data.payload.id,
           name: data.payload.data()["name"],
           teams: data.payload.data()["teams"],
@@ -56,35 +64,43 @@ export class MatchmakerComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
-  }
-
-  getTeams() {
-
+    this.redScore = 0;
+    this.blueScore = 0;
   }
 
   createMatch() {
 
+    console.log(this.redScore);
+    console.log(this.blueScore);
     if (this.team1.id != this.team2.id) {
+      if (this.redScore > -1 && this.blueScore > -1) {
+        let match: Match = {
+          date: formatDate(new Date(), "dd MMM yyyy", 'en'),
+          blueScore: this.blueScore,
+          redScore: this.redScore,
+          redTeamId: this.team1.id,
+          blueTeamId: this.team2.id,
+          finished: this.add == 'true',
+          id: this.team1.id + this.team2.id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
+        }
 
-      let match: Match = {
-        date: formatDate(new Date(), "dd MMM yyyy", 'en'),
-        blueScore: 0,
-        redScore: 0,
-        redTeamId: this.team1.id,
-        blueTeamId:  this.team2.id,
-        finished: false,
-        id: this.team1.id + this.team2.id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
+        this.tournament.matches.push(match);
+        this.crudService.addInfoToTournament(this.tournament).then(resp => {
+          this._snackBar.show('⚽ Match created successfully.');
+        }).catch(error => {
+          this._snackBar.show('⚠️ Error: ' + error);
+        });
+
+        if (this.add != 'true')
+          this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id } });
+        else
+          this.router.navigate(['/tournament'], {queryParams: {id: this.tournament.id}})
       }
-
-      this.tournament.matches.push(match);
-      this.crudService.addInfoToTournament(this.tournament).then(resp => {
-        this._snackBar.show('⚽ Team created successfully.');
-      }).catch(error => {
-        this._snackBar.show('⚠️ Error: ' + error);
-      });
-      this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id }});
+      else {
+        this._snackBar.show("⚠ You cannot select negative score for the match");
+      }
     }
-    else{
+    else {
       this._snackBar.show("⚠ You cannot make a match with the same team for all side");
     }
   }

@@ -41,8 +41,13 @@
                     New match
                 </a>
             </div>
+            <div *ngIf="tournament.type == 'Pre-Made'">
+                <a *ngIf="isAdmin === true" class="btn btn-dark m-3" (click)="addNewMatch(id)">
+                    Add match
+                </a>
+            </div>
 
-            <a *ngIf="isSigned === true" class="btn btn-dark m-3" (click)="Unsubscibe()">
+            <a *ngIf="isSigned === true && tournament.type != 'Pre-Made'" class="btn btn-dark m-3" (click)="Unsubscibe()">
                 Unsubscibe
             </a>
 
@@ -62,9 +67,9 @@
     </div>
 
     <div class="row">
-        <div *ngIf="tournament.type == 'League'" class="h-flex-container container-align-center">
+        <div class="h-flex-container container-align-center">
 
-            <div class="flex-cell cell-3 cell-align-center">
+            <div class="flex-cell cell-3 cell-align-center" *ngIf="tournament.type == 'League'">
                 <h3 class="text-center">Teams</h3>
                 <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
                     Name | Score | Win | Lost | Played | GF | GS
@@ -76,12 +81,12 @@
                 </div>
             </div>
 
-            <div class="flex-cell cell-3 medium-cell-1 small-cell-1 cell-align-start">
+            <div class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
                 <h3 class="text-center">Matches</h3>
-                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center">
+                <div class="flex-cell cell-1 medium-cell-1 small-cell-1 text-center cell-align-center">
                     [Team1] ScoreT1 - ScoreT2 [Team2] (Date)
                 </div>
-                <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-center"
+                <div class="flex-cell cell-1 medium-cell-1 small-cell-1 text-center cell-align-center"
                     *ngFor="let m of matches; let i = index">
                     [{{m.blueTeam.name}}]
                     {{m.blueScore}} -
@@ -96,7 +101,7 @@
             </div>
         </div>
 
-        <div *ngIf="tournament.type == 'Championship'" class="h-flex-container container-align-center">
+        <div *ngIf="tournament.type == 'Championship' || tournament.type == 'Pre-Made'" class="h-flex-container container-align-center">
             <div class="flex-cell cell-1 cell-align-center">
                 <h3 class="text-center">Teams</h3>
                 <div class="flex-cell cell-3 medium-cell-1 small-cell-1 text-center cell-align-start">
@@ -109,13 +114,15 @@
             </div>
         </div>
 
-        <div class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
+        <div *ngIf="tournament.type != 'Pre-Made'" class="flex-cell cell-1 medium-cell-1 small-cell-1 cell-align-start">
             <h3 class="text-center">Players</h3>
             <div class="row justify-content-center">
                 Name | Role
             </div>
             <div class="row justify-content-center" *ngFor="let p of tournament.users; let i = index">
-                {{p.name}} | {{p.role}}
+                <div *ngIf="p.role != 'Admin'">
+                    {{p.name}} | {{p.role}}
+                </div>
             </div>
         </div>
         <div *ngIf="tournament.type == 'Championship'" class="flex-cell cell-1 cell-align-center">

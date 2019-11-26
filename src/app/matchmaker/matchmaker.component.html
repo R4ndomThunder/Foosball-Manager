@@ -1,19 +1,20 @@
-<div class="row mt-5">
+<div *ngIf="add == 'false'">
+    <div class="row mt-5">
         <div class="col-lg-2 col-md-2 col-sm col-xs">
         </div>
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
             <h2 class="text-center mb-5">- Create a new match -</h2>
         </div>
     </div>
-    
+
     <div class="row mt-5">
         <div class="col-lg-2 col-md-2 col-sm-1 d-xs-none">
         </div>
-    
+
         <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
             <form [formGroup]="matchForm" style="width:100%;">
                 <div class="form-row justify-content-center">
-    
+
                     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <label for="inputAddress">*Team 1:</label>
                         <select formControlName="redTeam" class="form-control" [(ngModel)]="team1">
@@ -37,7 +38,58 @@
                 </div>
             </form>
         </div>
-    
+
         <div class="col-lg-2 col-md-2 col-sm-1 d-xs-none">
         </div>
     </div>
+</div>
+
+<div *ngIf="add == 'true'">
+    <div class="row mt-5">
+        <div class="col-lg-2 col-md-2 col-sm col-xs">
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <h2 class="text-center mb-5">- Add a new match -</h2>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-2 col-md-2 col-sm-1 d-xs-none">
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+            <form [formGroup]="matchForm" style="width:100%;">
+                <div class="form-row justify-content-center">
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="inputAddress">*Team 1:</label>
+                        <select formControlName="redTeam" class="form-control" [(ngModel)]="team1">
+                            <option disabled>Select a team</option>
+                            <option *ngFor="let team1N of tournament.teams" [ngValue]="team1N">{{team1N.name}}</option>
+                        </select>
+                        <label >Score Team 1: </label><br>
+                        <input type="number" formControlName="redS" [(ngModel)]="redScore" />
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="inputAddress">*Team 2:</label>
+                        <select formControlName="blueTeam" class="form-control" [(ngModel)]="team2">
+                            <option disabled>Select a team</option>
+                            <option *ngFor="let team2N of tournament.teams" [ngValue]="team2N">{{team2N.name}}</option>
+                        </select>
+                        <label >Score Team 2: </label><br>
+                        <input type="number" formControlName="blueS" [(ngModel)]="blueScore"/>
+                    </div>
+                </div>
+                <div class="text-center mt-2 mb-5">
+                    <button type="submit" class="btn btn-dark" [disabled]="matchForm.invalid"
+                        (click)="createMatch()">Add</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-1 d-xs-none">
+        </div>
+    </div>
+</div>

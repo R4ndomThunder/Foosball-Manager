@@ -25,23 +25,50 @@
                     <select class="form-control" formControlName="Type" [(ngModel)]="type">
                         <option>Championship</option>
                         <option>League</option>
+                        <option>Pre-Made</option>
                     </select>
                 </div>
             </div>
-            <div class="form-row justify-content-center">
-                <p> <b>Championship</b>:</p>
+            <div class="form-row justify-content-center v-flex-container">
+                <p> <b>League</b>:</p>
                 <ul>
                     <li>Build teams</li>
                     <li>Teams' Scoreboard</li>
                     <li>Players' Scoreboard</li>
                 </ul>
-                <p><b>League</b>:</p>
+                <p><b>Championship</b>:</p>
                 <ul>
                     <li>Random teams</li>
                     <li>Brackets</li>
                     <li>Random matches</li>
                 </ul>
+                <p><b>Pre-Made</b>:</p>
+                <ul>
+                    <li>Teams & users from CSV file</li>
+                    <li>Matches</li>                    
+                </ul>
             </div>
+            <div *ngIf="type == 'Pre-Made'">
+                <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)"
+                    accept=".csv" />
+                <table class="minimalistBlack" *ngIf="records.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Team </th>
+                            <th>Defender </th>
+                            <th>Striker </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of records;let i = index;">
+                            <td> <span>{{record.team}}</span> </td>
+                            <td> <span>{{record.defender}}</span> </td>
+                            <td> <span>{{record.striker}}</span> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="text-center mt-2 mb-5">
                 <button type="submit" class="btn btn-dark" [disabled]="tournamentForm.invalid"
                     (click)="createTournament()">Create</button>

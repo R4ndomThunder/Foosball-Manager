@@ -83,7 +83,11 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   createNewMatch(tournamentId) {
-    this.router.navigate(['/matchmaker'], { queryParams: { id: tournamentId } });
+    this.router.navigate(['/matchmaker'], { queryParams: { id: tournamentId, add: "false" } });
+  }
+
+  addNewMatch(tournamentId){
+    this.router.navigate(['/matchmaker'], { queryParams: { id: tournamentId, add: "true" } });
   }
 
   subscribe() {
@@ -96,7 +100,7 @@ export class TournamentdetailComponent implements OnInit {
     this.crud.addInfoToTournament(this.tournament).then(resp => {
       this._snackBar.show('👤 Subscribed successfully.');
     }).catch(error => {
-      this._snackBar.show('⚠️ Error: ' + error);
+      this._snackBar.show('⚠️ Error: ' + error); 
     });
     this.router.navigate(['/tournament'], { queryParams: { id: this.id } });
   }
