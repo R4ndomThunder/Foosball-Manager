@@ -1,5 +1,5 @@
-<div class="flex-container container-align-center">
-    <form [formGroup]="tournamentForm" style="width:100%;">
+<div class="container">
+    <form [formGroup]="tournamentForm">
         <div class="form-row justify-content-center">
             <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <label for="inputAddress">*Tournament name:</label>
@@ -7,29 +7,13 @@
                     placeholder="Foosball Champions" [(ngModel)]="name">
             </div>
         </div>
-        <!-- <div class="form-row justify-content-center">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label for="inputAddress">*Type:</label>
-                <select class="form-control" formControlName="Type" [(ngModel)]="type">
-                    <option>Championship</option>
-                    <option>League</option>
-                </select>
-            </div>
-
-        </div> -->
-        <!-- <div class="form-row justify-content-center">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <mat-slide-toggle (change)="setValue($event)" [checked]="randomize === true">
-                    Randomize Teams
-                </mat-slide-toggle>
-            </div>
-        </div> -->
+        
         <div class="form-row justify-content-center">
             <a (click)="updateTournament()" class="btn btn-dark mr-2">
-                Update
+                💾 Save
             </a>
             <a class="btn btn-danger ml-2" (click)="closeTournament()">
-                Close Tournament
+                ❌ Delete Tournament
             </a>
         </div>
     </form>

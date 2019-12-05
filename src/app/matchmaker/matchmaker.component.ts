@@ -69,11 +69,59 @@ export class MatchmakerComponent implements OnInit {
   }
 
   createMatch() {
-
-    console.log(this.redScore);
-    console.log(this.blueScore);
     if (this.team1.id != this.team2.id) {
-      if (this.redScore > -1 && this.blueScore > -1) {
+      if (this.add == 'true') {
+        if (this.redScore <= -1 && this.blueScore <= -1) {
+          this._snackBar.show("⚠ You cannot select negative score for the match");
+        }
+        else if (this.redScore == this.blueScore) {
+          this._snackBar.show("⚠ You cannot make a match with the same team for all side");
+        }
+        else {
+          let match: Match = {
+            date: formatDate(new Date(), "dd MMM yyyy", 'en'),
+            blueScore: this.blueScore,
+            redScore: this.redScore,
+            redTeamId: this.team1.id,
+            blueTeamId: this.team2.id,
+            finished: this.add == 'true',
+            id: this.team1.id + this.team2.id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
+          }
+
+          this.team1.played++;
+          this.team2.played++;
+
+          this.team1.goalFatti += this.redScore;
+          this.team1.goalSubiti += this.blueScore;
+
+          this.team2.goalFatti += this.blueScore;
+          this.team2.goalSubiti += this.redScore;
+          
+          if (this.redScore > this.blueScore) {
+            this.team1.win++;
+            this.team2.lost++;
+            this.team1.score += 3;
+          }
+          else {
+            this.team2.win++;
+            this.team1.lost++;
+            this.team2.score += 3;
+          }
+
+          var team2 = this.tournament.teams.find(t => t.id == this.team2.id);
+          team2 = this.team2;
+          var team1 = this.tournament.teams.find(t => t.id == this.team1.id);
+          team1 = this.team1;
+          this.tournament.matches.push(match);
+          this.crudService.addInfoToTournament(this.tournament).then(resp => {
+            this._snackBar.show('⚽ Match added successfully.');
+          }).catch(error => {
+            this._snackBar.show('⚠️ Error: ' + error);
+          });
+          this.router.navigate(['/tournament'], { queryParams: { id: this.tournament.id } })
+        }
+      }
+      else {
         let match: Match = {
           date: formatDate(new Date(), "dd MMM yyyy", 'en'),
           blueScore: this.blueScore,
@@ -83,25 +131,15 @@ export class MatchmakerComponent implements OnInit {
           finished: this.add == 'true',
           id: this.team1.id + this.team2.id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
         }
-
         this.tournament.matches.push(match);
+
         this.crudService.addInfoToTournament(this.tournament).then(resp => {
           this._snackBar.show('⚽ Match created successfully.');
         }).catch(error => {
           this._snackBar.show('⚠️ Error: ' + error);
         });
-
-        if (this.add != 'true')
-          this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id } });
-        else
-          this.router.navigate(['/tournament'], {queryParams: {id: this.tournament.id}})
+        this.router.navigate(['/matchmanager'], { queryParams: { tournament: this.tournament.id, match: match.id } });
       }
-      else {
-        this._snackBar.show("⚠ You cannot select negative score for the match");
-      }
-    }
-    else {
-      this._snackBar.show("⚠ You cannot make a match with the same team for all side");
     }
   }
 }

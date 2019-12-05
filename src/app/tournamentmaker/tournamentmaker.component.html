@@ -1,81 +1,83 @@
-<div class="row mt-5">
-    <div class="col-lg-2 col-md-2 col-sm col-xs">
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-lg-2 col-md-2 col-sm col-xs">
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <h2 class="text-center mb-5">- Create a new tournament -</h2>
+        </div>
     </div>
-    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-        <h2 class="text-center mb-5">- Create a new tournament -</h2>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    </div>
-
-    <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
-        <form [formGroup]="tournamentForm" style="width:100%;">
-            <div class="form-row justify-content-center">
-                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <label for="inputAddress">*Tournament name:</label>
-                    <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
-                        placeholder="Foosball Champions" [(ngModel)]="name">
+    
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        </div>
+    
+        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
+            <form [formGroup]="tournamentForm" style="width:100%;">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="inputAddress">*Tournament name:</label>
+                        <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
+                            placeholder="Foosball Champions" [(ngModel)]="name">
+                    </div>
                 </div>
-            </div>
-            <div class="form-row justify-content-center">
-                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <label for="inputAddress">*Type:</label>
-                    <select class="form-control" formControlName="Type" [(ngModel)]="type">
-                        <option>Championship</option>
-                        <option>League</option>
-                        <option>Pre-Made</option>
-                    </select>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="inputAddress">*Type:</label>
+                        <select class="form-control" formControlName="Type" [(ngModel)]="type">
+                            <option>Championship</option>
+                            <option>League</option>
+                            <option>Pre-Made</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row justify-content-center v-flex-container">
-                <p> <b>League</b>:</p>
-                <ul>
-                    <li>Build teams</li>
-                    <li>Teams' Scoreboard</li>
-                    <li>Players' Scoreboard</li>
-                </ul>
-                <p><b>Championship</b>:</p>
-                <ul>
-                    <li>Random teams</li>
-                    <li>Brackets</li>
-                    <li>Random matches</li>
-                </ul>
-                <p><b>Pre-Made</b>:</p>
-                <ul>
-                    <li>Teams & users from CSV file</li>
-                    <li>Matches</li>                    
-                </ul>
-            </div>
-            <div *ngIf="type == 'Pre-Made'">
-                <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)"
-                    accept=".csv" />
-                <table class="minimalistBlack" *ngIf="records.length > 0">
-                    <thead>
-                        <tr>
-                            <th>Team </th>
-                            <th>Defender </th>
-                            <th>Striker </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let record of records;let i = index;">
-                            <td> <span>{{record.team}}</span> </td>
-                            <td> <span>{{record.defender}}</span> </td>
-                            <td> <span>{{record.striker}}</span> </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="text-center mt-2 mb-5">
-                <button type="submit" class="btn btn-dark" [disabled]="tournamentForm.invalid"
-                    (click)="createTournament()">Create</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div class="form-row justify-content-center v-flex-container">
+                    <p> <b>League</b>:</p>
+                    <ul>
+                        <li>Build teams</li>
+                        <li>Teams' Scoreboard</li>
+                        <li>Players' Scoreboard</li>
+                    </ul>
+                    <p><b>Championship</b>:</p>
+                    <ul>
+                        <li>Random teams</li>
+                        <li>Brackets</li>
+                        <li>Random matches</li>
+                    </ul>
+                    <p><b>Pre-Made</b>:</p>
+                    <ul>
+                        <li>Teams & users from CSV file</li>
+                        <li>Matches</li>                    
+                    </ul>
+                </div>
+                <div *ngIf="type == 'Pre-Made'">
+                    <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)"
+                        accept=".csv" />
+                    <table class="minimalistBlack" *ngIf="records.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Team </th>
+                                <th>Defender </th>
+                                <th>Striker </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let record of records;let i = index;">
+                                <td> <span>{{record.team}}</span> </td>
+                                <td> <span>{{record.defender}}</span> </td>
+                                <td> <span>{{record.striker}}</span> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+                <div class="text-center mt-2 mb-5">
+                    <button type="submit" class="btn btn-dark" [disabled]="tournamentForm.invalid"
+                        (click)="createTournament()">Create</button>
+                </div>
+            </form>
+        </div>
+    
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        </div>
     </div>
 </div>

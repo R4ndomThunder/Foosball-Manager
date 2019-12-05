@@ -1,14 +1,16 @@
-<form [formGroup]="teamForm" style="width:100%;">
-    <div class="form-row justify-content-center">
-        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <label for="inputAddress">*Team name:</label>
-            <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
-                placeholder="Foosball Champions" [(ngModel)]="teamName">
+<div class="container">
+    <form [formGroup]="teamForm" style="width:100%;">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <label for="inputAddress">*Team name:</label>
+                <input type="text" class="form-control" id="inputAddress" formControlName="Name" mdbInputDirective
+                    placeholder="Foosball Champions" [(ngModel)]="teamName">
+            </div>
         </div>
-    </div>
-    <div class="form-row justify-content-center">
-        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <a (click)="updateTeam()" class="btn btn-dark">Update</a>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <a (click)="updateTeam()" class="btn btn-dark">Update</a>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

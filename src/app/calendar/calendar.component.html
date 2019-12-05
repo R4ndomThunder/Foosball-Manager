@@ -1,0 +1,30 @@
+<div class="text-center">
+    <h3> 📅 Calendar 📅 </h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Team 1</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Team 2</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of calendar">
+                    <td>{{m.blueTeam.name}}</td>
+                    <td>{{m.blueScore}} - {{m.redScore}}</td>
+                    <td>{{m.redTeam.name}}</td>
+                    <td>
+                        <button class="btn btn-dark" type="button" (click)="PlayMatch()" *ngIf="m.isPlaying != null && m.isPlaying == false">
+                            ▶ Play
+                        </button>
+                        <p *ngIf="m.isPlaying != null && m.isPlaying == true">
+                            🔴 Live
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

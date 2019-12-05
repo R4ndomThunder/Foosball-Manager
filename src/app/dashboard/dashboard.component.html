@@ -1,47 +1,27 @@
-<main class="dashboard">
-    <div class="content" *ngIf="tournaments != null">
-        <div class="content__top-box">
-            <h3>Active Tournaments</h3>
-        </div>
-        <div class="content__list-tournaments">
-            <div class="container">
-                <div class="table">
-                    <div class="table__header animated fadeIn">
-                        <div class="row m-0">
-                            <div class="head-col col">
-                                <span>
-                                    Type
-                                </span>
-                            </div>
-                            <div class="head-col col">
-                                <span>
-                                    Name
-                                </span>
-                            </div>
-                            <div class="head-col col">
-                                <span>
-                                    N° Teams
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table__content animated bounceInUp">
-                        <div class="single-row row m-0 " *ngFor="let t of tournaments">
-                            <div class="data-col col">
-                                <img [src]="'../../assets/icons/'+t.type+'.png'" class="img-fluid" [alt]="t.type">
-                            </div>
-                            <div class="data-col col">
-                                <span (click)="goToTournament(t.id)">{{t.name}}</span>
-                            </div>
-                            <div class="data-col col text-center">
-                                {{t.teams}}
-                            </div>
-                        </div>
-                    </div>
+<main class="container">
+        <div class="text-center">
+                <h3> 🏆 Active Tournaments 🏆 </h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Type</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Teams</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let t of tournaments">
+                                <td>{{t.type}}</td>
+                                <td>{{t.name}}</td>
+                                <td>{{t.teams}}</td>         
+                                <td><button class="btn btn-dark" type="button" (click)="goToTournament(t.id)">Show</button></td>                       
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
 
     <div class="content" *ngIf="tournaments == null">
         <loading></loading>

@@ -25,12 +25,11 @@ export class TournamentdetailComponent implements OnInit {
   roleForm: FormGroup;
   match: Match;
   matches: any;
+  matchesToPlay: any;
+
 
   brackets: Bracket;
 
-  dataSource = this.tournament;
-  expandedElement: Tournament | null;
-  columnsToDisplay = ["Name", "Score", "Win", "Lost", "Played", "GF", "GS"]
 
   constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, public _snackBar: SnackbarService) {
     this.roleForm = this.fb.group({
@@ -57,7 +56,8 @@ export class TournamentdetailComponent implements OnInit {
           brackets: data.payload.data()["brackets"]
         };
         this.tournament = f;
-        this.matches = this.tournament.matches;
+        this.matches = this.tournament.matches.filter(m => m.finished);
+        this.matchesToPlay = this.tournament.matches.filter(m => m.finished == false);
         this.matches.forEach(element => {
           element.blueTeam = this.tournament.teams.find(t => t.id == element.blueTeamId);
           element.redTeam = this.tournament.teams.find(t => t.id == element.redTeamId);
@@ -138,7 +138,6 @@ export class TournamentdetailComponent implements OnInit {
 
   inThisTeam(t: Team): boolean {
     return (t.strikerId == this.auth.userData.uid || t.defenderId == this.auth.userData.uid)
-
   }
 
 

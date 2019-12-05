@@ -8,6 +8,7 @@ export class Match {
     redTeamId: string;
     date: string;
     finished: boolean;
+    isPlaying? : boolean;
     id: string;
 
     constructor(match: Match, newObject?: boolean, blueTeam?: Team, redTeam?: Team)
@@ -20,6 +21,7 @@ export class Match {
                 redTeamId: redTeam.id,
                 blueTeamId: blueTeam.id,
                 finished: false,
+                isPlaying: false,
                 id: redTeam.id+blueTeam.id+formatDate(new Date(), "ddMMyyyyHHmmss", 'en'),
                 date: formatDate(new Date(), "dd MMM yyyy", 'en')
             }

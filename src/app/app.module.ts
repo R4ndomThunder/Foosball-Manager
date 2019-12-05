@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -39,6 +40,9 @@ import { MessagingService } from './messaging.service';
 import { AngularFireMessagingModule, AngularFireMessaging } from '@angular/fire/messaging';
 import { AsyncPipe } from '@angular/common';
 import { LoadingComponent } from './loading/loading.component';
+import { MatchListComponent } from './match-list/match-list.component';
+import { TeamListComponent } from './team-list/team-list.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
@@ -59,6 +63,9 @@ import { LoadingComponent } from './loading/loading.component';
     TournamentManagerComponent,
     TeammanagerComponent,
     LoadingComponent,
+    MatchListComponent,
+    TeamListComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +84,7 @@ import { LoadingComponent } from './loading/loading.component';
     MatMenuModule,
     MatTableModule, 
     MatSlideToggleModule,
+    MatExpansionModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [AuthService, MessagingService],
