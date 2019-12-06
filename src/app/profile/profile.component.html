@@ -12,6 +12,7 @@
             <div *ngIf="auth.userData as user">
                 <h1>Hi <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h1>
                 <p><strong>Email: {{user.email}}</strong></p>
+                <p><strong>UID: </strong><button type="button" class="btn btn-dark" (click)="copyMessage(user.uid)"> <i>{{user.uid}}</i></button></p>
                 <div *ngIf="extraUserData != null">
                     <form [formGroup]="userForm">
                         <p><strong>Preferred role:</strong></p>

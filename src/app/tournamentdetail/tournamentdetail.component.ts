@@ -7,7 +7,7 @@ import { Tournament } from '../services/tournaments';
 import { TournamentUser } from '../services/user';
 import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
 import { Match } from '../services/matches';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 import { Bracket, Round } from '../services/brackets';
 import { formatDate } from '@angular/common';
 
@@ -31,7 +31,7 @@ export class TournamentdetailComponent implements OnInit {
   brackets: Bracket;
 
 
-  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, public _snackBar: SnackbarService) {
+  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, public _snackBar: PopupService) {
     this.roleForm = this.fb.group({
       PlayerRole: ['', Validators.required]
     })
@@ -86,7 +86,7 @@ export class TournamentdetailComponent implements OnInit {
     this.router.navigate(['/matchmaker'], { queryParams: { id: tournamentId, add: "false" } });
   }
 
-  addNewMatch(tournamentId){
+  addNewMatch(tournamentId) {
     this.router.navigate(['/matchmaker'], { queryParams: { id: tournamentId, add: "true" } });
   }
 
@@ -100,7 +100,7 @@ export class TournamentdetailComponent implements OnInit {
     this.crud.addInfoToTournament(this.tournament).then(resp => {
       this._snackBar.show('👤 Subscribed successfully.');
     }).catch(error => {
-      this._snackBar.show('⚠️ Error: ' + error); 
+      this._snackBar.show('⚠️ Error: ' + error);
     });
     this.router.navigate(['/tournament'], { queryParams: { id: this.id } });
   }
@@ -130,10 +130,22 @@ export class TournamentdetailComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    if (this.tournament != null && this.tournament.admin == this.auth.userData.uid)
-      return true;
-    else
-      return false;
+    var iA : boolean = false;
+    if (this.tournament != null)
+      this.tournament.admin.forEach(id => {
+        if (id == this.auth.userData.uid) {
+          iA = true;
+        }
+      })
+    return iA;
+  }
+
+  getAdmins(adminsIds: string[]): string[] {
+    var admins: string[] = [];
+    adminsIds.forEach(id => {
+      admins.push(this.getUserName(id));
+    });
+    return admins;
   }
 
   inThisTeam(t: Team): boolean {
@@ -182,20 +194,20 @@ export class TournamentdetailComponent implements OnInit {
           var t1 = this.random(teams.length);
           var t2 = this.random(teams.length, t1);
 
-          var newMatch : Match = {
+          var newMatch: Match = {
             blueTeamId: teams[t1].id,
             redTeamId: teams[t2].id,
             blueScore: 0,
-            redScore : 0,
+            redScore: 0,
             finished: true,
             date: formatDate(new Date(), "dd MMM yyyy", 'en'),
-            id: teams[t2].id+teams[t1].id+formatDate(new Date(), "ddMMyyyyHHmmss", 'en')
+            id: teams[t2].id + teams[t1].id + formatDate(new Date(), "ddMMyyyyHHmmss", 'en')
           };
 
           round.matches.push(newMatch);
           teams.splice(t1, 1);
           teams.splice(t2, 1);
-          }
+        }
       }
       else {
         for (let index = 0; index < matchesNumber; index++) {

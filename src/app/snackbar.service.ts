@@ -1,12 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { ModalComponent } from './modal/modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SnackbarService {
+export class PopupService {
 
-  constructor(public snack: MatSnackBar, private zone: NgZone) { }
+  constructor(public snack: MatSnackBar, private zone: NgZone, public modal: ModalComponent) { }
 
   show(message: string) {
     const config = new MatSnackBarConfig();
@@ -25,5 +26,10 @@ export class SnackbarService {
     config.horizontalPosition = 'center';
     config.duration = 2500;
     return this.snack.open(message, actionText, config);
+  }
+
+  showModal(id)
+  {
+    this.modal.showModal(id);
   }
 }

@@ -3,7 +3,7 @@ import { CrudService } from '../crud.service';
 import { AuthService } from '../auth-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { Bracket } from '../services/brackets';
@@ -23,7 +23,7 @@ export class TeammanagerComponent implements OnInit {
   teamName: string;
   teamForm: FormGroup;
 
-  constructor(public crud: CrudService, public auth: AuthService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar: SnackbarService) {
+  constructor(public crud: CrudService, public auth: AuthService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar: PopupService) {
     this.teamForm = fb.group({
       Name: ['', Validators.required]
     })

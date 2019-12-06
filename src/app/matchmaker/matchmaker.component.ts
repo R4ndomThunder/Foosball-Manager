@@ -8,7 +8,7 @@ import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
 import { formatDate } from '@angular/common';
 import { AuthService } from '../auth-service.service';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 
 @Component({
   selector: 'app-matchmaker',
@@ -31,7 +31,7 @@ export class MatchmakerComponent implements OnInit {
   matchForm: FormGroup;
   matchControl = new FormControl('', [Validators.required]);
 
-  constructor(private fb: FormBuilder, public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService, private _snackBar: SnackbarService) {
+  constructor(private fb: FormBuilder, public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, private crudService: CrudService, private _snackBar: PopupService) {
     this.matchForm = fb.group({
       blueTeam: ['', Validators.required],
       redTeam: ['', Validators.required],

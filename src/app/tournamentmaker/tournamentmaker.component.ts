@@ -6,7 +6,7 @@ import { CrudService } from '../crud.service';
 import { Router } from '@angular/router';
 import { Tournament } from '../services/tournaments';
 import { TournamentUser } from '../services/user';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 import { TeammakerComponent } from '../teammaker/teammaker.component';
 import { Team } from '../services/team';
 
@@ -20,6 +20,7 @@ export class TournamentmakerComponent implements OnInit {
   name: string;
   tournament: any;
   type: string;
+  limit: number;
   public records: any[] = [];
 
   // @ViewChild('csvReader') 
@@ -27,10 +28,11 @@ export class TournamentmakerComponent implements OnInit {
 
   tournamentControl = new FormControl('', [Validators.required]);
 
-  constructor(private fb: FormBuilder, private crudService: CrudService, public auth: AuthService, private router: Router, private _snackBar: SnackbarService) {
+  constructor(private fb: FormBuilder, private crudService: CrudService, public auth: AuthService, private router: Router, private _snackBar: PopupService) {
     this.tournamentForm = fb.group({
       Name: ['', Validators.required],
       Type: ['', Validators.required],
+      Limit: [0, Validators.required],
     })
   }
 

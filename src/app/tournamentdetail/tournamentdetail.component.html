@@ -4,9 +4,10 @@
     </div>
     <div class="text-center" *ngIf="tournament != null">
         <h2>🏆 {{tournament.name}} 🏆</h2>
-        <i>Admin: {{getUserName(tournament.admin)}}</i>
+        <i>Admin: {{getAdmins(tournament.admin)}}</i>
         <div *ngIf="isAdmin == true">
-            <button class="btn btn-dark" type="button" (click)="manageTournament()">🔧 Edit</button>
+            <button class="btn btn-dark" type="button" (click)="manageTournament()"><fa-icon [icon]="['fas','cogs']"></fa-icon> Edit</button>
+            <button class="btn btn-dark" type="button" (click)="addNewMatch(id)"><fa-icon [icon]="['fas','plus-circle']"></fa-icon> Match </button>
         </div>
 
         <div class="dropdown-divider"></div>

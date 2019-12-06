@@ -22,7 +22,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent,canActivate: [SecureInnerPagesGuard] },
   { path: 'teammaker', component: TeammakerComponent,canActivate: [SecureInnerPagesGuard] },
   { path: 'tournamentmaker', component: TournamentmakerComponent,canActivate: [SecureInnerPagesGuard] },
-  { path: 'leaderboard', component: LeaderboardComponent, canActivate:[SecureInnerPagesGuard]},
   { path: 'tournament', component: TournamentdetailComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'matchmaker', component: MatchmakerComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'matchmanager', component: MatchmanagerComponent, canActivate: [SecureInnerPagesGuard]},

@@ -1,7 +1,7 @@
 <div class="text-center">
     <h3> 🏅 Teams 🏅 </h3>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -9,17 +9,27 @@
                     <th scope="col">Score</th>
                     <th scope="col">Win</th>
                     <th scope="col">Lost</th>
+                    <th scope="col">Played</th>
                     <th scope="col">Pts Diff</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let t of teams;index as i" [ngClass]="{'table-danger':i >= 8, 'table-success': i < 8}">
+                <tr *ngFor="let t of teams;index as i"
+                    [ngClass]="{'table-danger':i >= limit, 'table-success': i < limit}">
                     <th scope="row">{{i+1}}</th>
                     <td>{{t.name}}</td>
                     <td>{{t.score}}</td>
                     <td>{{t.win}}</td>
                     <td>{{t.lost}}</td>
+                    <td>{{t.played}}</td>
                     <td>{{t.goalFatti - t.goalSubiti}}</td>
+                    <td>
+                        <button type="button" class="btn btn-info"  data-toggle="modal"
+                            data-target="#myModal" (click)="showTeamDetail(t.id)">
+                            <fa-icon [icon]="['fas','info']"></fa-icon> Details
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>

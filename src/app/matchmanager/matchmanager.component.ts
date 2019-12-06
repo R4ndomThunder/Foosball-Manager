@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { Match } from '../services/matches';
 import { Tournament } from '../services/tournaments';
 import { Team } from '../services/team';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 import { TournamentUser } from '../services/user';
 import { extraUserData } from '../services/extraUserData';
 import { Bracket } from '../services/brackets';
@@ -33,7 +33,7 @@ export class MatchmanagerComponent implements OnInit {
   dfsTeam1: TournamentUser;
   dfsTeam2: TournamentUser;
 
-  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private snack: SnackbarService) { }
+  constructor(public auth: AuthService, private crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private snack: PopupService) { }
 
   ngOnInit() {
     this.route.queryParams

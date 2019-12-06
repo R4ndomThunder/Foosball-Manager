@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from '@angular/material';
 import { CrudService } from './crud.service';
 import { extraUserData } from './services/extraUserData';
-import { SnackbarService } from './snackbar.service';
+import { PopupService } from './snackbar.service';
 import { MessagingService } from './messaging.service';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
-    public snackBar: SnackbarService,
+    public snackBar: PopupService,
     public crud: CrudService,
     public messages: MessagingService
   ) {

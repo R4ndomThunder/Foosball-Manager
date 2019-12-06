@@ -4,6 +4,7 @@ import { CrudService } from '../crud.service';
 import { extraUserData } from '../services/extraUserData';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PopupService } from '../snackbar.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit {
   userForm: FormGroup;
   userControl = new FormControl('', [Validators.required]);
   userId: string;
-  constructor(public auth: AuthService, public crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+  constructor(public auth: AuthService, public crud: CrudService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private snack: PopupService) {
     this.userForm = fb.group({
       Role: ['', Validators.required],
     })
@@ -65,5 +66,20 @@ export class ProfileComponent implements OnInit {
     }
     this.extraUserData.preferredRole = this.role;
     this.crud.setPlayerData(this.userId, this.extraUserData);
+  }
+
+  copyMessage(val: string){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.snack.show("UID has been copied!");
   }
 }

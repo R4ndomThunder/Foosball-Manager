@@ -10,7 +10,8 @@ export class Tournament {
     matches?: Match[];
     users?: TournamentUser[];
     type: string;
-    admin: string;
+    admin: string[];
+    limit?: number;
     brackets?:Bracket;
 
     constructor(tournament: Tournament, newObject?: boolean, name?: string, adminUID?: string, type?: string) {
@@ -22,7 +23,7 @@ export class Tournament {
                 teams: [],
                 users: [],
                 type: type,
-                admin: adminUID
+                admin:[...adminUID]
             }
         }
         return tournament;

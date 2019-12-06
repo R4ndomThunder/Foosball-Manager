@@ -4,7 +4,7 @@ import { Tournament } from '../services/tournaments';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-import { SnackbarService } from '../snackbar.service';
+import { PopupService } from '../snackbar.service';
 import { Bracket } from '../services/brackets';
 
 @Component({
@@ -22,7 +22,7 @@ export class TournamentManagerComponent implements OnInit {
   tournament: Tournament;
   tournamentControl = new FormControl('', [Validators.required]);
 
-  constructor(public crud: CrudService, public auth: AuthService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar: SnackbarService) {
+  constructor(public crud: CrudService, public auth: AuthService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private _snackBar: PopupService) {
     this.tournamentForm = fb.group({
       Name: ['', Validators.required],
       Type: ['', Validators.required],

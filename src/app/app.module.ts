@@ -43,6 +43,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { MatchListComponent } from './match-list/match-list.component';
 import { TeamListComponent } from './team-list/team-list.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ModalComponent } from './modal/modal.component';
+import { PopupService } from './snackbar.service';
 
 
 @NgModule({
@@ -66,6 +68,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     MatchListComponent,
     TeamListComponent,
     CalendarComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     MatExpansionModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [AuthService, MessagingService],
+  providers: [AuthService, MessagingService, PopupService, ModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
